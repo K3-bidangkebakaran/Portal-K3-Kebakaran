@@ -56,12 +56,12 @@
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen" oncontextmenu="return false;">
 
     <!-- Banner Visitor -->
-    <div class="bg-indigo-900 text-white text-xs py-1.5 px-4 text-center font-medium tracking-wide shadow-inner flex justify-center items-center">
+    <div class="bg-indigo-900 text-white text-xs py-1.5 px-4 text-center font-medium tracking-wide shadow-inner flex justify-center items-center z-50 relative">
         <svg class="w-4 h-4 mr-2 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
         Total Pengunjung Website: <span id="visitor-count" class="ml-1 font-bold text-accent animate-pulse">Memuat...</span>
     </div>
 
-    <nav id="navbar" class="w-full z-50 bg-white transition-all duration-300 shadow-sm sticky top-0">
+    <nav id="navbar" class="w-full z-40 bg-white transition-all duration-300 shadow-sm sticky top-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center space-x-3">
@@ -671,8 +671,9 @@
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-1">
                             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 sticky top-0">
-                                <h3 class="text-md font-bold text-gray-900 mb-4 border-b pb-2">Tambah Soal Ujian</h3>
+                                <h3 class="text-md font-bold text-gray-900 mb-4 border-b pb-2">Tambah / Edit Soal</h3>
                                 <form id="form-soal" class="space-y-4">
+                                    <input type="hidden" id="input-soal-id" value="">
                                     <div>
                                         <label class="block text-xs font-semibold text-gray-700 mb-1">Kategori Kelas Virtual</label>
                                         <select id="input-soal-kategori" required class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none bg-white text-sm font-medium text-gray-800">
@@ -698,7 +699,10 @@
                                             <option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option>
                                         </select>
                                     </div>
-                                    <button type="submit" class="w-full py-2.5 bg-primary text-white rounded-lg font-bold hover:bg-secondary text-sm shadow-sm transition-colors">Simpan Soal</button>
+                                    <div class="flex space-x-2 pt-2">
+                                        <button type="button" id="btn-batal-soal" class="hidden w-1/3 py-2 border border-gray-300 text-gray-700 rounded-lg font-bold hover:bg-gray-100 transition-colors text-sm shadow-sm">Batal</button>
+                                        <button type="submit" id="btn-submit-soal" class="flex-1 py-2.5 bg-primary text-white rounded-lg font-bold hover:bg-secondary text-sm shadow-sm transition-colors">Simpan Soal</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -774,7 +778,6 @@
                     onValue(ref(db, `${pathPeserta}/${user.uid}`), (snap) => {
                         const data = snap.val();
                         if(data) {
-                            // Mengambil data email asli dari profil Firebase DB
                             currentUser = { nama: data.nama, instansi: data.instansi, email: data.email || user.email, role: 'peserta', uid: user.uid };
                             renderAvatarUI(data.nama, 'Peserta');
                             document.getElementById('modul-locked')?.classList.add('hidden'); document.getElementById('modul-list')?.classList.remove('hidden');
@@ -985,9 +988,62 @@
         document.getElementById('form-tim')?.addEventListener('submit', async (e) => { e.preventDefault(); if(!currentUser) return; const btn = e.target.querySelector('button'); const ori = btn.innerText; btn.innerText = "..."; try { await push(ref(db, pathTim), { nama: document.getElementById('input-tim-nama').value, hp: document.getElementById('input-tim-hp').value, pin: document.getElementById('input-tim-pin').value, timestamp: Date.now() }); e.target.reset(); btn.innerText = "Oke!"; } catch(err){} setTimeout(() => { btn.innerText = ori; }, 2000); });
 
         document.getElementById('form-soal')?.addEventListener('submit', async (e) => {
-            e.preventDefault(); if(!currentUser) return; const btn = e.target.querySelector('button'); const ori = btn.innerText; btn.innerText = "Menyimpan...";
-            try { await push(ref(db, pathSoal), { kategori: document.getElementById('input-soal-kategori').value, pertanyaan: document.getElementById('input-tanya').value, opsi: [ document.getElementById('input-opsi-0').value, document.getElementById('input-opsi-1').value, document.getElementById('input-opsi-2').value, document.getElementById('input-opsi-3').value ], jawabanBenar: parseInt(document.getElementById('input-jawaban').value), timestamp: Date.now() }); e.target.reset(); btn.innerText = "Soal Tersimpan!"; } catch(err) { btn.innerText = "Gagal Menyimpan"; console.error(err); } setTimeout(() => { btn.innerText = ori; }, 2000);
+            e.preventDefault(); if(!currentUser) return; 
+            const btn = document.getElementById('btn-submit-soal'); const ori = btn.innerText; btn.innerText = "Menyimpan...";
+            const idEditSoal = document.getElementById('input-soal-id').value;
+            const dataToSave = {
+                kategori: document.getElementById('input-soal-kategori').value,
+                pertanyaan: document.getElementById('input-tanya').value,
+                opsi: [ document.getElementById('input-opsi-0').value, document.getElementById('input-opsi-1').value, document.getElementById('input-opsi-2').value, document.getElementById('input-opsi-3').value ],
+                jawabanBenar: parseInt(document.getElementById('input-jawaban').value),
+            };
+            
+            try { 
+                if(idEditSoal) {
+                    await update(ref(db, `${pathSoal}/${idEditSoal}`), dataToSave);
+                    btn.innerText = "Soal Diperbarui!";
+                    document.getElementById('btn-batal-soal')?.click();
+                } else {
+                    dataToSave.timestamp = Date.now();
+                    await push(ref(db, pathSoal), dataToSave); 
+                    e.target.reset(); btn.innerText = "Soal Tersimpan!"; 
+                }
+            } catch(err) { btn.innerText = "Gagal Menyimpan"; console.error(err); } 
+            setTimeout(() => { btn.innerText = ori; }, 2000);
         });
+
+        document.getElementById('btn-batal-soal')?.addEventListener('click', () => {
+            document.getElementById('form-soal').reset();
+            document.getElementById('input-soal-id').value = '';
+            document.getElementById('btn-batal-soal').classList.add('hidden');
+            document.getElementById('btn-submit-soal').innerHTML = "Simpan Soal";
+        });
+
+        window.editSoal = function(id) {
+            const data = quizDataFromDB.find(q => q.id === id); if(!data) return;
+            document.getElementById('input-soal-id').value = data.id;
+            document.getElementById('input-soal-kategori').value = data.kategori || 'Kelas D';
+            document.getElementById('input-tanya').value = data.pertanyaan;
+            if(data.opsi && data.opsi.length === 4) {
+                document.getElementById('input-opsi-0').value = data.opsi[0];
+                document.getElementById('input-opsi-1').value = data.opsi[1];
+                document.getElementById('input-opsi-2').value = data.opsi[2];
+                document.getElementById('input-opsi-3').value = data.opsi[3];
+            }
+            document.getElementById('input-jawaban').value = data.jawabanBenar;
+            
+            document.getElementById('btn-batal-soal').classList.remove('hidden');
+            document.getElementById('btn-submit-soal').innerHTML = "Simpan Perubahan";
+            
+            // Auto scroll to form
+            document.getElementById('admin-panel-soal').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        window.hapusSoal = async function(id) {
+            if(confirm("Apakah Anda yakin ingin menghapus soal ini secara permanen?")) {
+                try { await remove(ref(db, `${pathSoal}/${id}`)); } catch(e){ console.error(e); }
+            }
+        };
 
         function formatRupiah(angka) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka); }
         function formatDate(dateString) { if(!dateString) return '-'; if(dateString.includes(',')) { return dateString.split(',').map(d => { const dt = new Date(d.trim()); return dt.toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' }); }).join('<br>'); } const d = new Date(dateString); return d.toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' }); }
@@ -1109,6 +1165,7 @@
             }
         }
 
+        // --- Fetch Data Utama (REALTIME DB STYLE) ---
         function fetchDataRealtime() {
             onValue(ref(db, pathPeserta), (snapshot) => {
                 const tbodyAdmin = document.getElementById('admin-table-peserta'); const statPendaftar = document.getElementById('stat-total-pendaftar'); const statLulus = document.getElementById('stat-total-lulus');
@@ -1184,20 +1241,51 @@
             });
 
             onValue(ref(db, pathSoal), (snapshot) => {
-                quizDataFromDB = []; const listAdmin = document.getElementById('admin-list-soal');
-                if(listAdmin) listAdmin.innerHTML = ''; let no = 1;
-                if (!snapshot.exists() && listAdmin) { listAdmin.innerHTML = '<p class="text-sm text-gray-500 italic text-center py-4">Belum ada soal yang tersimpan di Database.</p>'; return; }
+                quizDataFromDB = [];
+                const listAdmin = document.getElementById('admin-list-soal');
+                if(listAdmin) listAdmin.innerHTML = '';
+                let no = 1;
+
+                if (!snapshot.exists() && listAdmin) {
+                    listAdmin.innerHTML = '<p class="text-sm text-gray-500 italic text-center py-4">Belum ada soal yang tersimpan di Database.</p>';
+                    return;
+                }
+
                 snapshot.forEach(childSnap => {
-                    const data = childSnap.val(); quizDataFromDB.push(data);
+                    const data = childSnap.val();
+                    data.id = childSnap.key;
+                    quizDataFromDB.push(data);
+                    
                     if(listAdmin) {
-                        const labels = ['A', 'B', 'C', 'D']; let htmlOpsi = '';
-                        if(data.opsi && Array.isArray(data.opsi)) { data.opsi.forEach((opt, idx) => { const isCorrect = idx === data.jawabanBenar; htmlOpsi += `<div class="text-xs mt-1 ${isCorrect ? 'font-bold text-green-600' : 'text-gray-500'}">${labels[idx]}. ${opt} ${isCorrect ? '✓ (Benar)' : ''}</div>`; }); }
-                        let badgeCol = 'bg-gray-100 text-gray-700'; if(data.kategori === 'Kelas A') badgeCol = 'bg-red-100 text-red-700'; if(data.kategori === 'Kelas B') badgeCol = 'bg-orange-100 text-orange-700'; if(data.kategori === 'Kelas C') badgeCol = 'bg-green-100 text-green-700'; if(data.kategori === 'Kelas D') badgeCol = 'bg-blue-100 text-blue-700';
-                        listAdmin.innerHTML += `<div class="p-4 bg-gray-50 border border-gray-200 rounded-lg mb-3 shadow-sm"><div class="mb-2"><span class="text-[10px] ${badgeCol} px-2 py-0.5 rounded font-bold uppercase tracking-wider">${data.kategori || 'Umum'}</span></div><h4 class="font-bold text-gray-800 text-sm mb-2 leading-relaxed">${no}. ${data.pertanyaan}</h4><div class="pl-3 border-l-2 border-gray-200">${htmlOpsi}</div></div>`;
+                        const labels = ['A', 'B', 'C', 'D'];
+                        let htmlOpsi = '';
+                        if(data.opsi && Array.isArray(data.opsi)) {
+                            data.opsi.forEach((opt, idx) => {
+                                const isCorrect = idx === data.jawabanBenar;
+                                htmlOpsi += `<div class="text-xs mt-1 ${isCorrect ? 'font-bold text-green-600' : 'text-gray-500'}">${labels[idx]}. ${opt} ${isCorrect ? '✓ (Benar)' : ''}</div>`;
+                            });
+                        }
+                        
+                        let badgeCol = 'bg-gray-100 text-gray-700';
+                        if(data.kategori === 'Kelas A') badgeCol = 'bg-red-100 text-red-700';
+                        if(data.kategori === 'Kelas B') badgeCol = 'bg-orange-100 text-orange-700';
+                        if(data.kategori === 'Kelas C') badgeCol = 'bg-green-100 text-green-700';
+                        if(data.kategori === 'Kelas D') badgeCol = 'bg-blue-100 text-blue-700';
+
+                        listAdmin.innerHTML += `
+                            <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg mb-3 shadow-sm relative group transition-all hover:shadow-md hover:border-blue-200">
+                                <div class="absolute top-3 right-3 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onclick="editSoal('${data.id}')" class="text-blue-500 hover:text-blue-700 p-1.5 bg-white border border-blue-200 rounded shadow-sm transition-colors" title="Edit Soal"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
+                                    <button onclick="hapusSoal('${data.id}')" class="text-red-500 hover:text-red-700 p-1.5 bg-white border border-red-200 rounded shadow-sm transition-colors" title="Hapus Soal"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                                </div>
+                                <div class="mb-2"><span class="text-[10px] ${badgeCol} px-2 py-0.5 rounded font-bold uppercase tracking-wider">${data.kategori || 'Umum'}</span></div>
+                                <h4 class="font-bold text-gray-800 text-sm mb-2 leading-relaxed pr-16">${no}. ${data.pertanyaan}</h4>
+                                <div class="pl-3 border-l-2 border-gray-200">${htmlOpsi}</div>
+                            </div>`;
                         no++;
                     }
                 });
-            });
+            }, (e) => console.error(e));
 
             onValue(ref(db, pathVerifikasi), (snapshot) => {
                 const tbody = document.getElementById('admin-table-verifikasi'); const badge = document.getElementById('badge-verif');
