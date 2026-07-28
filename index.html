@@ -7,6 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Flatpickr (Untuk Input Multi-Tanggal) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
+
     <!-- Script EmailJS untuk pengiriman email otomatis -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
@@ -479,12 +484,24 @@
                         <form id="form-kegiatan" class="space-y-5 relative z-10 mt-5">
                             <input type="hidden" id="input-kegiatan-id" value="">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div><label class="block text-sm font-semibold text-gray-700 mb-1">Tanggal Kegiatan</label><input type="date" id="input-kegiatan-tanggal" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm"></div>
-                                <div><label class="block text-sm font-semibold text-gray-700 mb-1">Nama PJK3</label><input type="text" id="input-kegiatan-pjk3" required placeholder="Cth: PT. Keselamatan Maju" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm"></div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1">Tanggal Kegiatan</label>
+                                    <input type="text" id="input-kegiatan-tanggal" required placeholder="Pilih beberapa tanggal..." class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm bg-white cursor-pointer">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama PJK3</label>
+                                    <input type="text" id="input-kegiatan-pjk3" required placeholder="Cth: PT. Keselamatan Maju" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm">
+                                </div>
                             </div>
-                            <div><label class="block text-sm font-semibold text-gray-700 mb-1">Nama Kegiatan Lengkap</label><input type="text" id="input-kegiatan-nama" required placeholder="Cth: Training Ahli K3 Kebakaran Kelas A" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm"></div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Kegiatan Lengkap</label>
+                                <input type="text" id="input-kegiatan-nama" required placeholder="Cth: Training Ahli K3 Kebakaran Kelas A" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm">
+                            </div>
                             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-4">
-                                <div><label class="block text-sm font-semibold text-gray-700 mb-1">Pilih Tim Bertugas</label><select id="input-kegiatan-tim" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white text-sm font-medium"><option value="" disabled selected>-- Memuat Daftar Tim --</option></select></div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1">Pilih Tim Bertugas</label>
+                                    <select id="input-kegiatan-tim" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white text-sm font-medium"><option value="" disabled selected>-- Memuat Daftar Tim --</option></select>
+                                </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
                                         <label class="block text-sm font-semibold text-blue-700 mb-1">Pendapatan Management (Rp)</label>
@@ -673,6 +690,16 @@
         }
         initAuth();
 
+        // Inisialisasi Flatpickr untuk kalender Kegiatan
+        let fpKegiatan = null;
+        if (document.getElementById('input-kegiatan-tanggal')) {
+            fpKegiatan = flatpickr("#input-kegiatan-tanggal", {
+                mode: "multiple",
+                dateFormat: "Y-m-d",
+                locale: "id"
+            });
+        }
+
         // --- Kontrol UI, Modal, Hamburger ---
         const overlay = document.getElementById('modal-overlay');
         window.openModal = function(modalId) {
@@ -836,7 +863,9 @@
 
         document.getElementById('form-kegiatan')?.addEventListener('submit', async (e) => {
             e.preventDefault(); if(!auth.currentUser) return; const btn = document.getElementById('btn-submit-kegiatan'); const ori = btn.innerHTML; btn.innerText = "Menyimpan..."; btn.disabled = true;
-            const idEdit = document.getElementById('input-kegiatan-id').value; const selectTim = document.getElementById('input-kegiatan-tim'); const idTim = selectTim.value; const namaTim = selectTim.options[selectTim.selectedIndex].text; const tanggal = document.getElementById('input-kegiatan-tanggal').value; const namaKeg = document.getElementById('input-kegiatan-nama').value; const pjk3 = document.getElementById('input-kegiatan-pjk3').value; const pendapatanManagement = parseInt(document.getElementById('input-kegiatan-pendapatan').value) || 0; const pendapatanTim = parseInt(document.getElementById('input-kegiatan-pendapatan-tim').value) || 0;
+            const idEdit = document.getElementById('input-kegiatan-id').value; const selectTim = document.getElementById('input-kegiatan-tim'); const idTim = selectTim.value; const namaTim = selectTim.options[selectTim.selectedIndex].text; 
+            const tanggal = document.getElementById('input-kegiatan-tanggal').value; // Mengambil string tanggal dari Flatpickr
+            const namaKeg = document.getElementById('input-kegiatan-nama').value; const pjk3 = document.getElementById('input-kegiatan-pjk3').value; const pendapatanManagement = parseInt(document.getElementById('input-kegiatan-pendapatan').value) || 0; const pendapatanTim = parseInt(document.getElementById('input-kegiatan-pendapatan-tim').value) || 0;
             const dataToSave = { idTim, namaTim, tanggal, namaKegiatan: namaKeg, pjk3, pendapatanManagement, pendapatanTim, statusBayar: false };
             try {
                 if (idEdit) { 
@@ -847,7 +876,7 @@
                     await push(ref(db, pathKegiatan), dataToSave);
                     if (idTim !== 'admin_utama') { const timData = dataTimAll.find(t => t.id === idTim); if(timData && timData.hp) { await sendWA_Fonnte(timData.hp, `*PEMBERITAHUAN TUGAS BARU*\n\nHalo *${timData.nama}*,\nTim Anda ditugaskan untuk kegiatan:\n\n📌 *Kegiatan:* ${namaKeg}\n🏢 *PJK3:* ${pjk3}\n📅 *Tanggal:* ${tanggal}\n\nMohon persiapkan tim. Trims.`); } }
                     btn.innerText = "Tersimpan!";
-                } e.target.reset();
+                } e.target.reset(); if(fpKegiatan) fpKegiatan.clear();
             } catch (err) { btn.innerText = "Error!"; }
             setTimeout(() => { btn.innerHTML = ori; btn.disabled = false; }, 2000);
         });
@@ -855,10 +884,15 @@
         const btnBatalKegiatan = document.getElementById('btn-batal-kegiatan');
         btnBatalKegiatan?.addEventListener('click', () => {
             document.getElementById('form-kegiatan').reset(); document.getElementById('input-kegiatan-id').value = ''; btnBatalKegiatan.classList.add('hidden'); document.getElementById('btn-submit-kegiatan').innerHTML = "Simpan Data & Kirim WA Tim";
+            if (fpKegiatan) fpKegiatan.clear();
         });
         window.editKegiatan = function(id) {
             const data = dataKegiatanAll.find(k => k.id === id); if(!data) return;
-            document.getElementById('input-kegiatan-id').value = data.id; document.getElementById('input-kegiatan-tanggal').value = data.tanggal; document.getElementById('input-kegiatan-pjk3').value = data.pjk3; document.getElementById('input-kegiatan-nama').value = data.namaKegiatan; document.getElementById('input-kegiatan-tim').value = data.idTim; document.getElementById('input-kegiatan-pendapatan').value = data.pendapatanManagement || 0; document.getElementById('input-kegiatan-pendapatan-tim').value = data.pendapatanTim || 0;
+            document.getElementById('input-kegiatan-id').value = data.id; 
+            if (fpKegiatan && data.tanggal) { fpKegiatan.setDate(data.tanggal.split(',').map(d => d.trim())); }
+            else { document.getElementById('input-kegiatan-tanggal').value = data.tanggal; }
+            document.getElementById('input-kegiatan-pjk3').value = data.pjk3; document.getElementById('input-kegiatan-nama').value = data.namaKegiatan; document.getElementById('input-kegiatan-tim').value = data.idTim; document.getElementById('input-kegiatan-pendapatan').value = data.pendapatanManagement || 0; document.getElementById('input-kegiatan-pendapatan-tim').value = data.pendapatanTim || 0;
+            
             btnBatalKegiatan?.classList.remove('hidden'); document.getElementById('btn-submit-kegiatan').innerHTML = "Simpan Perubahan";
             document.querySelector('.admin-nav-btn[data-target="admin-panel-kegiatan"]')?.click();
         };
@@ -891,7 +925,18 @@
 
         // --- Fungsi Render UI Otomatis (Realtime) ---
         function formatRupiah(angka) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka); }
-        function formatDate(dateString) { if(!dateString) return '-'; const d = new Date(dateString); return d.toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' }); }
+        
+        // Memperbarui Format Date untuk menangani Multi-Tanggal (dipisah koma)
+        function formatDate(dateString) { 
+            if(!dateString) return '-'; 
+            if(dateString.includes(',')) {
+                return dateString.split(',').map(d => {
+                    const dt = new Date(d.trim());
+                    return dt.toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' });
+                }).join('<br>');
+            }
+            const d = new Date(dateString); return d.toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' }); 
+        }
 
         function renderDashboardPendapatanHome() {
             if(!currentUser) return;
@@ -911,7 +956,9 @@
                 const today = new Date();
                 for(let day = 1; day <= daysInMonth; day++) {
                     const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                    const dayEvents = filteredKegiatan.filter(k => k.tanggal === dateStr);
+                    // Update deteksi multi-tanggal pada kalender
+                    const dayEvents = filteredKegiatan.filter(k => k.tanggal && k.tanggal.includes(dateStr));
+                    
                     let eventsHtml = '';
                     dayEvents.forEach(evt => {
                         eventsHtml += `<div onclick="editKegiatan('${evt.id}')" class="mt-1 px-1.5 py-1 text-[10px] leading-tight bg-blue-100 text-blue-800 border border-blue-200 rounded cursor-pointer hover:bg-blue-200 shadow-sm transition-colors" title="Edit Kegiatan ini"><div class="font-bold truncate">${evt.pjk3}</div>${currentUser.role === 'admin_utama' ? `<div class="text-[9px] text-gray-500 truncate mt-0.5 border-t border-blue-200 pt-0.5">${evt.namaTim}</div>` : ''}</div>`;
@@ -929,7 +976,13 @@
             if(tbodyPendapatan) {
                 tbodyPendapatan.innerHTML = '';
                 let totalMasukLunas = 0; let totalTertunda = 0;
-                let sortedPendapatan = [...filteredKegiatan].sort((a,b) => new Date(a.tanggal) - new Date(b.tanggal));
+                
+                // Sorting agar kegiatan multi-tanggal diurutkan berdasar tanggal pertamanya
+                let sortedPendapatan = [...filteredKegiatan].sort((a,b) => {
+                    const dateA = a.tanggal ? a.tanggal.split(',')[0].trim() : '';
+                    const dateB = b.tanggal ? b.tanggal.split(',')[0].trim() : '';
+                    return new Date(dateA) - new Date(dateB);
+                });
 
                 if(sortedPendapatan.length === 0) tbodyPendapatan.innerHTML = '<tr><td colspan="5" class="text-center py-6 text-gray-500 text-sm">Belum ada data pendapatan.</td></tr>';
                 else {
