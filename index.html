@@ -8,10 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Flatpickr (Kalender Multi-Tanggal) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
 
+    <!-- Script EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript"> (function() { emailjs.init("service_phv7wvj"); })(); </script>
 
@@ -224,16 +226,13 @@
                 <button class="btn-close-modal text-gray-400 hover:text-gray-800 bg-gray-100 p-1.5 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
             
-            <!-- Tabs -->
             <div class="flex mb-6 bg-gray-100 p-1 rounded-lg">
                 <button id="tab-btn-masuk" class="flex-1 py-2 font-bold text-sm rounded-md bg-white shadow text-primary">Masuk</button>
                 <button id="tab-btn-daftar" class="flex-1 py-2 font-bold text-sm rounded-md text-gray-500 hover:text-gray-800">Daftar Akun Baru</button>
             </div>
 
-            <!-- Pesan Error/Sukses -->
             <div id="auth-message" class="hidden mb-4 p-3 rounded text-sm text-center font-bold"></div>
 
-            <!-- Form Masuk -->
             <form id="form-login-peserta" class="space-y-4">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Username <span class="text-xs font-normal text-gray-500">(Tanpa spasi)</span></label>
@@ -246,10 +245,9 @@
                 <button type="submit" id="btn-do-login" class="w-full py-3 bg-primary text-white rounded-lg font-bold hover:bg-secondary transition-colors mt-2 shadow-md">Masuk ke Sistem</button>
             </form>
 
-            <!-- Form Daftar -->
             <form id="form-register-peserta" class="space-y-4 hidden">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Buat Username <span class="text-xs font-normal text-gray-500">(Digunakan utk login)</span></label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Buat Username</label>
                     <input type="text" id="reg-username" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none lowercase placeholder-gray-400" placeholder="contoh: budik3">
                 </div>
                 <div>
@@ -489,8 +487,9 @@
                     </div>
                 </div>
 
+                <!-- Panel: Keuangan -->
                 <div id="admin-panel-pendapatan" class="admin-panel hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
                         <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-green-500"><p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Total Lunas</p><p class="text-2xl font-extrabold text-green-600" id="stat-uang-masuk">Rp 0</p><p class="text-[10px] text-gray-400 mt-1">Dari kegiatan berstatus Lunas</p></div>
                         <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-orange-400"><p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Saldo Tertunda</p><p class="text-2xl font-extrabold text-orange-500" id="stat-uang-tertunda">Rp 0</p><p class="text-[10px] text-gray-400 mt-1">Menunggu pembayaran</p></div>
                         <div onclick="bukaModalHutang()" class="admin-utama-only bg-white p-5 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-red-500 hidden cursor-pointer hover:bg-red-50 transition-colors group">
@@ -498,6 +497,7 @@
                             <p class="text-2xl font-extrabold text-red-600" id="stat-hutang-tim">Rp 0</p>
                             <p class="text-[10px] text-gray-400 mt-1 flex items-center">Klik untuk detail / lunasi <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></p>
                         </div>
+                        <div class="admin-utama-only bg-white p-5 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-purple-500 hidden"><p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Total Pengeluaran</p><p class="text-2xl font-extrabold text-purple-600" id="stat-uang-keluar">Rp 0</p><p class="text-[10px] text-gray-400 mt-1">Total biaya operasional</p></div>
                         <div class="admin-utama-only bg-white p-5 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-blue-600 hidden"><p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Saldo Bersih Saat Ini</p><p class="text-2xl font-extrabold text-blue-700" id="stat-uang-saldo">Rp 0</p><p class="text-[10px] text-gray-400 mt-1">(Total Lunas) - (Pengeluaran)</p></div>
                     </div>
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
@@ -785,7 +785,23 @@
                     fetchDataRealtime();
                 }
             } else {
-                try { await signInAnonymously(auth); } catch(e) { console.error("Gagal login anonim:", e); }
+                // Sistem Auto-Retry jika gagal terhubung ke jaringan (Khusus layar Pratinjau / Iframe)
+                const attemptLogin = async (retries = 3) => {
+                    for (let i = 0; i < retries; i++) {
+                        try {
+                            await signInAnonymously(auth);
+                            return; // Sukses, keluar dari perulangan
+                        } catch (e) {
+                            console.error(`Gagal login anonim (Percobaan ${i + 1}):`, e);
+                            if (i === retries - 1) {
+                                console.warn("Info: Jika Anda melihat ini di layar pratinjau, ini wajar karena keamanan sistem memblokir akses jaringan. Silakan buka lewat link GitHub Anda agar lancar.");
+                            }
+                            // Tunggu 2 detik sebelum mencoba lagi
+                            await new Promise(res => setTimeout(res, 2000));
+                        }
+                    }
+                };
+                attemptLogin();
             }
         });
 
@@ -930,6 +946,7 @@
 
         const btnBatalKegiatan = document.getElementById('btn-batal-kegiatan');
         btnBatalKegiatan?.addEventListener('click', () => { document.getElementById('form-kegiatan').reset(); document.getElementById('input-kegiatan-id').value = ''; btnBatalKegiatan.classList.add('hidden'); document.getElementById('btn-submit-kegiatan').innerHTML = "Simpan Data & Kirim WA Tim"; if(fpKegiatan) fpKegiatan.clear(); });
+        
         window.editKegiatan = function(id) {
             const data = dataKegiatanAll.find(k => k.id === id); if(!data) return;
             document.getElementById('input-kegiatan-id').value = data.id; if(fpKegiatan && data.tanggal) fpKegiatan.setDate(data.tanggal.split(',').map(d => d.trim())); document.getElementById('input-kegiatan-pjk3').value = data.pjk3; document.getElementById('input-kegiatan-nama').value = data.namaKegiatan; document.getElementById('input-kegiatan-tim').value = data.idTim; document.getElementById('input-kegiatan-pendapatan').value = data.pendapatanManagement || 0; document.getElementById('input-kegiatan-pendapatan-tim').value = data.pendapatanTim || 0; btnBatalKegiatan?.classList.remove('hidden'); document.getElementById('btn-submit-kegiatan').innerHTML = "Simpan Perubahan"; document.querySelector('.admin-nav-btn[data-target="admin-panel-kegiatan"]')?.click();
@@ -1005,28 +1022,60 @@
 
             const tbodyPendapatan = document.getElementById('admin-table-pendapatan');
             if(tbodyPendapatan) {
-                tbodyPendapatan.innerHTML = ''; let totalMasukLunas = 0; let totalTertunda = 0; let hutangTimData = {}; let totalHutangTim = 0;
+                tbodyPendapatan.innerHTML = ''; 
+                let totalMasukLunas = 0; 
+                let totalTertunda = 0; 
+                let hutangTimData = {}; 
+                let totalHutangTim = 0;
+                
                 let sortedPendapatan = [...filteredKegiatan].sort((a,b) => { const dateA = a.tanggal ? a.tanggal.split(',')[0].trim() : ''; const dateB = b.tanggal ? b.tanggal.split(',')[0].trim() : ''; return new Date(dateA) - new Date(dateB); });
 
                 if(sortedPendapatan.length === 0) tbodyPendapatan.innerHTML = '<tr><td colspan="6" class="text-center py-6 text-gray-500 text-sm">Belum ada data pendapatan.</td></tr>';
                 else {
                     sortedPendapatan.forEach(k => {
                         const nominal = currentUser.role === 'admin_utama' ? (Number(k.pendapatanManagement) || 0) : (Number(k.pendapatanTim) || 0);
-                        const dates = k.tanggal ? k.tanggal.split(',').map(d => d.trim()) : []; const statusBayarDates = k.statusBayarDates || {}; let lunasCount = 0; let checkHtml = '';
+                        const dates = k.tanggal ? k.tanggal.split(',').map(d => d.trim()) : []; 
+                        const statusBayarDates = k.statusBayarDates || {}; 
+                        let lunasCount = 0; let checkHtml = '';
+                        
+                        // Menghitung porsi nominal untuk setiap hari (pro-rata)
+                        let nominalPerHari = dates.length > 0 ? (nominal / dates.length) : nominal;
                         
                         dates.forEach(d => {
-                            let isLunasDate = false; if (statusBayarDates.hasOwnProperty(d)) { isLunasDate = statusBayarDates[d] === true; } else { isLunasDate = k.statusBayar === true; }
-                            if(isLunasDate) lunasCount++;
-                            if(currentUser.role === 'admin_utama') { checkHtml += `<label class="flex items-center space-x-2 mt-1 cursor-pointer"><input type="checkbox" ${isLunasDate?'checked':''} onchange="toggleStatusBayarTgl('${k.id}', '${d}', this.checked)" class="rounded border-gray-300 text-primary focus:ring-primary h-3.5 w-3.5 shadow-sm"><span class="text-[10px] text-gray-700 font-medium">${formatDate(d)}</span></label>`; } 
-                            else { checkHtml += `<div class="text-[10px] text-gray-500 flex items-center mt-1"><span class="w-1.5 h-1.5 rounded-full mr-1.5 ${isLunasDate ? 'bg-green-500' : 'bg-gray-300'}"></span>${formatDate(d)}</div>`; }
+                            let isLunasDate = false; 
+                            if (statusBayarDates.hasOwnProperty(d)) { isLunasDate = statusBayarDates[d] === true; } 
+                            else { isLunasDate = k.statusBayar === true; }
+                            
+                            // Jika dicentang, masuk Total Lunas, jika tidak masuk Tertunda
+                            if(isLunasDate) {
+                                lunasCount++;
+                                totalMasukLunas += nominalPerHari;
+                            } else {
+                                totalTertunda += nominalPerHari;
+                            }
+
+                            if(currentUser.role === 'admin_utama') { 
+                                checkHtml += `<label class="flex items-center space-x-2 mt-1 cursor-pointer"><input type="checkbox" ${isLunasDate?'checked':''} onchange="toggleStatusBayarTgl('${k.id}', '${d}', this.checked)" class="rounded border-gray-300 text-primary focus:ring-primary h-3.5 w-3.5 shadow-sm"><span class="text-[10px] text-gray-700 font-medium">${formatDate(d)}</span></label>`; 
+                            } else { 
+                                checkHtml += `<div class="text-[10px] text-gray-500 flex items-center mt-1"><span class="w-1.5 h-1.5 rounded-full mr-1.5 ${isLunasDate ? 'bg-green-500' : 'bg-gray-300'}"></span>${formatDate(d)}</div>`; 
+                            }
                         });
                         
-                        let badgeStatus = ''; const isLunasTotal = (dates.length > 0 && lunasCount === dates.length) || (dates.length === 0 && k.statusBayar === true);
+                        // Menangani data lama yang tidak memiliki koma (satu tanggal)
+                        if (dates.length === 0) {
+                            if (k.statusBayar === true) {
+                                totalMasukLunas += nominal;
+                                lunasCount = 1;
+                            } else {
+                                totalTertunda += nominal;
+                            }
+                        }
+                        
+                        let badgeStatus = ''; 
+                        const isLunasTotal = (dates.length > 0 && lunasCount === dates.length) || (dates.length === 0 && k.statusBayar === true);
                         if (lunasCount === 0 && !isLunasTotal) badgeStatus = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-700">BELUM BAYAR</span>`;
                         else if (isLunasTotal) badgeStatus = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700">LUNAS</span>`;
                         else badgeStatus = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700">SEBAGIAN</span>`;
-
-                        if (isLunasTotal) totalMasukLunas += nominal; else totalTertunda += nominal;
                         
                         if(currentUser.role === 'admin_utama' && k.idTim && k.idTim !== 'admin_utama' && k.statusBayarTim !== true) {
                             totalHutangTim += (Number(k.pendapatanTim) || 0);
@@ -1044,12 +1093,20 @@
                 const elMasuk = document.getElementById('stat-uang-masuk'); const elTertunda = document.getElementById('stat-uang-tertunda');
                 if(elMasuk) elMasuk.innerText = formatRupiah(totalMasukLunas); if(elTertunda) elTertunda.innerText = formatRupiah(totalTertunda);
                 
+                // Menghitung Saldo Bersih untuk Admin Utama
                 if(currentUser.role === 'admin_utama') {
                     let totalKeluar = 0; dataPengeluaranAll.forEach(p => totalKeluar += (Number(p.jumlah) || 0));
                     const elHutangTim = document.getElementById('stat-hutang-tim'); if(elHutangTim) elHutangTim.innerText = formatRupiah(totalHutangTim);
-                    const elKeluar = document.getElementById('stat-uang-keluar'); const elSaldo = document.getElementById('stat-uang-saldo');
+                    
+                    const elKeluar = document.getElementById('stat-uang-keluar'); 
+                    const elSaldo = document.getElementById('stat-uang-saldo');
+                    
                     if(elKeluar) elKeluar.innerText = formatRupiah(totalKeluar);
-                    if(elSaldo) { const saldoAkhir = totalMasukLunas - totalKeluar; elSaldo.innerText = formatRupiah(saldoAkhir); elSaldo.className = saldoAkhir >= 0 ? "text-2xl font-extrabold text-blue-700" : "text-2xl font-extrabold text-red-600"; }
+                    if(elSaldo) { 
+                        const saldoAkhir = totalMasukLunas - totalKeluar; 
+                        elSaldo.innerText = formatRupiah(saldoAkhir); 
+                        elSaldo.className = saldoAkhir >= 0 ? "text-2xl font-extrabold text-blue-700" : "text-2xl font-extrabold text-red-600"; 
+                    }
                 }
             }
         }
