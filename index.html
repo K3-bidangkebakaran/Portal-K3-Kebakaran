@@ -1445,6 +1445,15 @@
         window.approveUjian = async function(reqId) { try { await update(ref(db, `${pathVerifikasi}/${reqId}`), { status: 'approved' }); } catch(e){} };
         window.rejectUjian = async function(reqId) { try { await update(ref(db, `${pathVerifikasi}/${reqId}`), { status: 'rejected' }); } catch(e){} };
 
+        // Helper function for navigating quiz questions
+        function goToQuestion(index) {
+            if (index >= 0 && index < activeQuizData.length) {
+                currentQuizIndex = index;
+                renderQuestion();
+                renderQuizGrid();
+            }
+        }
+
         document.getElementById('btn-mulai-ujian')?.addEventListener('click', () => {
             if(!currentUser || currentUser.role !== 'peserta') { openModal('modal-login'); showAuthMsg("Silakan login/daftar akun untuk mengikuti Ujian."); return; }
             openModal('modal-ujian'); document.getElementById('ujian-intro').classList.remove('hidden'); document.getElementById('ujian-waiting').classList.add('hidden'); document.getElementById('ujian-soal').classList.add('hidden'); document.getElementById('ujian-hasil').classList.add('hidden');
@@ -1478,7 +1487,9 @@
                         flaggedQuestions = new Array(activeQuizData.length).fill(false);
                         
                         startTimer(); 
-                        renderQuestion(); remove(reqRef);
+                        renderQuestion(); 
+                        renderQuizGrid();
+                        remove(reqRef);
                     } else if (data && data.status === 'rejected') {
                         if(myVerifyRef) { myVerifyRef(); myVerifyRef = null; }
                         alert("Maaf, permintaan ujian Anda ditolak oleh Pengajar. Silakan hubungi pengajar Anda.");
@@ -1507,23 +1518,133 @@
             else { timerEl.parentElement.classList.replace('text-red-700', 'text-red-600'); timerEl.parentElement.classList.replace('bg-red-100', 'bg-red-50'); timerEl.parentElement.classList.replace('border-red-400', 'border-red-200'); timerEl.classList.remove('animate-pulse'); }
         }
 
+        // Render the grid of question numbers
+        function renderQuizGrid() {
+            const gridContainer = document.getElementById('quiz-nav-grid');
+            if(!gridContainer) return;
+            gridContainer.innerHTML = '';
+            
+            for(let i=0; i<activeQuizData.length; i++) {
+                let stateClass = "bg-white border-gray-300 text-gray-700"; // Belum terjawab
+                
+                if (userAnswers[i] !== null) {
+                    stateClass = "bg-green-500 text-white border-green-600"; // Terjawab
+                }
+                
+                if (flaggedQuestions[i] === true) {
+                    stateClass = "bg-yellow-400 text-yellow-900 border-yellow-500"; // Ragu-ragu (override hijau jika ada)
+                }
+
+                // Tandai soal yang sedang aktif
+                let activeRing = i === currentQuizIndex ? "ring-2 ring-primary ring-offset-1 font-extrabold" : "font-medium";
+
+                gridContainer.innerHTML += `
+                    <button onclick="goToQuestion(${i})" class="w-8 h-8 md:w-10 md:h-10 text-xs md:text-sm rounded border flex items-center justify-center transition-all ${stateClass} ${activeRing}">
+                        ${i + 1}
+                    </button>
+                `;
+            }
+        }
+
         function renderQuestion() {
-            if (currentQuizIndex >= activeQuizData.length) { finishQuiz(); return; }
+            if (currentQuizIndex >= activeQuizData.length) { return; } // Removed finishQuiz() from here
             const q = activeQuizData[currentQuizIndex]; const prog = document.getElementById('quiz-progress'); const cat = document.getElementById('quiz-category'); const quest = document.getElementById('quiz-question'); const optionsContainer = document.getElementById('quiz-options');
             if(prog) prog.innerText = `Soal ${currentQuizIndex + 1} / ${activeQuizData.length}`; if(cat) cat.innerText = q.kategori; if(quest) quest.innerText = q.pertanyaan; if(optionsContainer) optionsContainer.innerHTML = '';
+            
+            // Set Ragu-ragu checkbox state
+            const checkRagu = document.getElementById('check-ragu');
+            if(checkRagu) checkRagu.checked = flaggedQuestions[currentQuizIndex] === true;
+            
             const labels = ['A', 'B', 'C', 'D'];
             if(q.opsi && Array.isArray(q.opsi)) {
                 q.opsi.forEach((optText, index) => {
-                    const btn = document.createElement('button'); btn.className = "w-full text-left p-4 border-2 border-gray-100 rounded-xl hover:bg-blue-50 hover:border-primary transition-all flex items-center group font-medium text-gray-700 text-sm md:text-base shadow-sm"; btn.innerHTML = `<span class="w-8 h-8 rounded bg-gray-100 group-hover:bg-primary group-hover:text-white flex shrink-0 items-center justify-center mr-4 font-bold transition-colors">${labels[index]}</span> <span>${optText}</span>`;
-                    btn.onclick = () => { if (index === q.jawabanBenar) currentScore++; currentQuizIndex++; renderQuestion(); }; optionsContainer?.appendChild(btn);
+                    const isSelected = userAnswers[currentQuizIndex] === index;
+                    const selectedClass = isSelected ? "bg-blue-50 border-primary shadow-sm" : "border-gray-100 hover:bg-gray-50";
+                    const selectedIconClass = isSelected ? "bg-primary text-white" : "bg-gray-100 group-hover:bg-gray-200 text-gray-700";
+
+                    const btn = document.createElement('button'); 
+                    btn.className = `w-full text-left p-4 border-2 rounded-xl transition-all flex items-center group font-medium text-gray-700 text-sm md:text-base ${selectedClass}`; 
+                    btn.innerHTML = `<span class="w-8 h-8 rounded flex shrink-0 items-center justify-center mr-4 font-bold transition-colors ${selectedIconClass}">${labels[index]}</span> <span>${optText}</span>`;
+                    
+                    btn.onclick = () => { 
+                        userAnswers[currentQuizIndex] = index;
+                        renderQuestion(); // Re-render to show selection
+                        renderQuizGrid(); // Update grid color
+                    }; 
+                    optionsContainer?.appendChild(btn);
                 });
             }
+
+            // Update Next/Prev Button text/visibility if needed
+            const btnNext = document.getElementById('btn-next-soal');
+            if(btnNext) {
+                if(currentQuizIndex === activeQuizData.length - 1) {
+                    btnNext.innerHTML = `Selesai <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+                    btnNext.classList.replace('bg-primary', 'bg-green-500');
+                    btnNext.classList.replace('hover:bg-secondary', 'hover:bg-green-600');
+                } else {
+                    btnNext.innerHTML = `Selanjutnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
+                    btnNext.classList.replace('bg-green-500', 'bg-primary');
+                    btnNext.classList.replace('hover:bg-green-600', 'hover:bg-secondary');
+                }
+            }
+            
+            const btnPrev = document.getElementById('btn-prev-soal');
+            if(btnPrev) {
+                btnPrev.disabled = currentQuizIndex === 0;
+                if(currentQuizIndex === 0) btnPrev.classList.add('opacity-50', 'cursor-not-allowed');
+                else btnPrev.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
         }
+
+        // Navigation Buttons Event Listeners
+        document.getElementById('btn-next-soal')?.addEventListener('click', () => {
+            if(currentQuizIndex < activeQuizData.length - 1) {
+                goToQuestion(currentQuizIndex + 1);
+            } else {
+                // Di soal terakhir, buka dialog konfirmasi kumpul
+                if(confirm("Apakah Anda yakin ingin menyelesaikan ujian? Cek kembali jawaban Anda pada panel navigasi.")) {
+                    finishQuiz();
+                }
+            }
+        });
+
+        document.getElementById('btn-prev-soal')?.addEventListener('click', () => {
+            if(currentQuizIndex > 0) {
+                goToQuestion(currentQuizIndex - 1);
+            }
+        });
+
+        document.getElementById('btn-ragu-soal')?.addEventListener('click', () => {
+            flaggedQuestions[currentQuizIndex] = !flaggedQuestions[currentQuizIndex];
+            renderQuestion();
+            renderQuizGrid();
+        });
+
+        document.getElementById('btn-submit-ujian')?.addEventListener('click', () => {
+            let unanswered = 0;
+            userAnswers.forEach(ans => { if(ans === null) unanswered++ });
+            
+            let msg = "Apakah Anda yakin ingin menyelesaikan ujian dan mengirimkan jawaban?";
+            if(unanswered > 0) msg = `PERINGATAN: Ada ${unanswered} soal yang BELUM TERJAWAB.\nApakah Anda tetap ingin menyelesaikan ujian?`;
+            
+            if(confirm(msg)) {
+                finishQuiz();
+            }
+        });
 
         async function finishQuiz() {
             if(examTimerInterval) clearInterval(examTimerInterval); 
             document.getElementById('ujian-soal').classList.add('hidden'); document.getElementById('ujian-hasil').classList.remove('hidden');
             
+            // Hitung Score berdasarkan userAnswers
+            currentScore = 0;
+            activeQuizData.forEach((q, idx) => {
+                if(userAnswers[idx] === q.jawabanBenar) {
+                    currentScore++;
+                }
+            });
+
             const finalScore = Math.round((currentScore / activeQuizData.length) * 100); 
             const scoreEl = document.getElementById('quiz-score'); const emailStatusEl = document.getElementById('quiz-email-status'); const statusLulusEl = document.getElementById('quiz-status-lulus');
             
@@ -1547,23 +1668,36 @@
                 try { await update(ref(db, `${pathPeserta}/${currentUser.uid}`), { skorUjian: finalScore, statusKelulusan: isPassed ? 'Lulus' : 'Tidak Lulus' }); } catch(e){} 
                 
                 if (currentUser.email && emailStatusEl) {
-                    emailStatusEl.classList.remove('hidden'); emailStatusEl.innerText = `Mengirim hasil & kunci jawaban ke ${currentUser.email}...`; emailStatusEl.className = "text-xs font-medium text-blue-600 mt-4 animate-pulse block";
+                    emailStatusEl.classList.remove('hidden'); emailStatusEl.innerText = `Mengirim hasil & rincian jawaban ke ${currentUser.email}...`; emailStatusEl.className = "text-xs font-medium text-blue-600 mt-4 animate-pulse block";
                     
-                    let textJawaban = "Hasil Ujian K3 Bidang Kebakaran\nNama: " + currentUser.nama + "\nKategori: " + currentCategory + "\nNilai Akhir: " + finalScore + " / 100\nStatus: " + (isPassed ? 'LULUS' : 'TIDAK LULUS') + "\n\n=== KUNCI JAWABAN ===\n\n";
-                    activeQuizData.forEach((q, i) => { const opsiBenar = q.opsi[q.jawabanBenar]; textJawaban += (i+1) + ". " + q.pertanyaan + "\nJawaban Benar: " + opsiBenar + "\n\n"; });
+                    let textJawaban = "Hasil Ujian K3 Bidang Kebakaran\nNama: " + currentUser.nama + "\nKategori: " + currentCategory + "\nNilai Akhir: " + finalScore + " / 100\nStatus: " + (isPassed ? 'LULUS' : 'TIDAK LULUS') + "\n\n=== RINCIAN JAWABAN ===\n\n";
+                    activeQuizData.forEach((q, i) => { 
+                        const opsiBenar = q.opsi[q.jawabanBenar]; 
+                        const dijawab = userAnswers[i] !== null ? q.opsi[userAnswers[i]] : 'TIDAK MENJAWAB';
+                        const statusBenarText = userAnswers[i] === q.jawabanBenar ? '(BENAR)' : '(SALAH)';
+                        textJawaban += (i+1) + ". " + q.pertanyaan + "\nJawaban Anda: " + dijawab + " " + statusBenarText + "\nKunci Jawaban: " + opsiBenar + "\n\n"; 
+                    });
 
-                    const templateParams = { to_email: currentUser.email, to_name: currentUser.nama, score: finalScore, answer_key: textJawaban, sender_email: "ptnurivirapratama@gmail.com" };
+                    // EmailJS template matching exactly to prevent errors
+                    const templateParams = { 
+                        to_email: currentUser.email, 
+                        to_name: currentUser.nama, 
+                        score: finalScore, 
+                        answer_key: textJawaban,
+                        sender_email: "ptnurivirapratama@gmail.com" 
+                    };
 
-                    emailjs.send('service_phv7wvj', 'template_aofwfyn', templateParams).then(function(response) {
+                    emailjs.send('service_phv7wvj', 'template_aofwfyn', templateParams) 
+                    .then(function(response) {
                         emailStatusEl.classList.remove('animate-pulse'); emailStatusEl.className = "text-xs font-bold text-green-600 mt-4 block";
-                        emailStatusEl.innerHTML = `<svg class="w-4 h-4 inline mr-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Hasil & kunci jawaban telah terkirim ke email Anda.`;
+                        emailStatusEl.innerHTML = `<svg class="w-4 h-4 inline mr-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Hasil & rincian jawaban telah terkirim ke email Anda.`;
                     }, function(error) {
                         console.error('EmailJS Error:', error);
                         emailStatusEl.classList.remove('animate-pulse'); emailStatusEl.className = "text-xs font-bold text-red-500 mt-4 block";
-                        if (error && error.text && error.text.includes("The template_id parameter is required")) {
-                            emailStatusEl.innerHTML = `Pengiriman email gagal. Konfigurasi belum lengkap (ID Template tidak valid).`;
+                        if (error && error.text && error.text.includes("template_id parameter is required")) {
+                            emailStatusEl.innerHTML = `Gagal mengirim email. (ID Template kosong atau tidak valid).`;
                         } else {
-                            emailStatusEl.innerHTML = `Gagal mengirim email. (Pastikan Template ID EmailJS disetting).`;
+                            emailStatusEl.innerHTML = `Gagal mengirim email. Buka Konsol Browser untuk detail.`;
                         }
                     });
                 }
