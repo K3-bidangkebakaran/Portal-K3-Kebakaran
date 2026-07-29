@@ -16,7 +16,12 @@
 
     <!-- Script EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript"> (function() { emailjs.init("service_phv7wvj"); })(); </script>
+    <script type="text/javascript"> 
+        (function() { 
+            // GANTI "PUBLIC_KEY_ANDA" DI BAWAH INI DENGAN PUBLIC KEY DARI AKUN EMAILJS ANDA!
+            emailjs.init({ publicKey: "PUBLIC_KEY_ANDA" }); 
+        })(); 
+    </script>
 
     <script>
         tailwind.config = {
@@ -232,6 +237,7 @@
         </div>
     </footer>
 
+    <!-- MODALS SECTION -->
     <div id="modal-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-70 z-[60] hidden flex items-center justify-center backdrop-blur-sm p-4">
         
         <!-- Login / Register Peserta -->
@@ -789,8 +795,8 @@
         });
 
         // Membersihkan karakter terlarang untuk Realtime DB
-        let rawAppId = typeof __app_id !== 'undefined' ? __app_id : 'k3-kebakaran-app-v5';
-        const cleanAppId = rawAppId.replace(/[.#$\[\]]/g, '_');
+        // PERBAIKAN: Mengunci nama root database agar data tidak hilang saat pindah domain
+        const cleanAppId = 'portalk3_production_final';
         
         // Konfigurasi Database Firebase Asli Milik Adrian
         const firebaseConfig = {
@@ -1275,7 +1281,10 @@
             onValue(ref(db, pathTim), (snapshot) => {
                 dataTimAll = []; const selectKeg = document.getElementById('input-kegiatan-tim'); const listAdmin = document.getElementById('admin-list-tim'); const selectUjianTim = document.getElementById('select-ujian-tim');
                 if(selectKeg) selectKeg.innerHTML = `<option value="" disabled selected>-- Pilih Tim --</option><option value="admin_utama" class="font-bold text-primary">Admin Utama (Tanpa WA)</option>`;
-                if(selectUjianTim) selectUjianTim.innerHTML = `<option value="" disabled selected>-- Pilih Pengajar Anda --</option>`;
+                
+                // --- FITUR ADRIAN SEBAGAI PENGAJAR ---
+                if(selectUjianTim) selectUjianTim.innerHTML = `<option value="" disabled selected>-- Pilih Pengajar Anda --</option><option value="admin_utama" class="font-bold text-primary">Adrian (Admin Pusat)</option>`;
+                
                 if(listAdmin) listAdmin.innerHTML = '';
                 if(snapshot.exists()) {
                     snapshot.forEach(childSnap => {
@@ -1505,9 +1514,8 @@
 
                     const templateParams = { to_email: currentUser.email, to_name: currentUser.nama, score: finalScore, answer_key: textJawaban, sender_email: "ptnurivirapratama@gmail.com" };
 
-                    // Make sure to replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' 
-                    // with the actual IDs from your EmailJS dashboard.
-                    emailjs.send('service_phv7wvj', 'YOUR_TEMPLATE_ID', templateParams) 
+                    // GANTI 'SERVICE_ID_ANDA' dan 'TEMPLATE_ID_ANDA' di bawah ini
+                    emailjs.send('SERVICE_ID_ANDA', 'TEMPLATE_ID_ANDA', templateParams) 
                     .then(function(response) {
                         emailStatusEl.classList.remove('animate-pulse'); emailStatusEl.className = "text-xs font-bold text-green-600 mt-4 block";
                         emailStatusEl.innerHTML = `<svg class="w-4 h-4 inline mr-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Hasil & kunci jawaban telah terkirim ke email Anda.`;
