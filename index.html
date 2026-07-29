@@ -18,8 +18,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript"> 
         (function() { 
-            // GANTI "PUBLIC_KEY_ANDA" DI BAWAH INI DENGAN PUBLIC KEY DARI AKUN EMAILJS ANDA!
-            emailjs.init({ publicKey: "PUBLIC_KEY_ANDA" }); 
+            // Inisialisasi EmailJS menggunakan Public Key Anda
+            emailjs.init("vo0I3qZvyNFWClUEO"); 
         })(); 
     </script>
 
@@ -232,16 +232,15 @@
                         <span class="font-bold text-xs text-green-400 tracking-widest leading-none">PORTAL K3</span>
                     </div>
                 </div>
-                <div class="text-gray-400 text-sm">© 2026 Portal Layanan. Hak Cipta Dilindungi.</div>
+                <div class="text-gray-400 text-sm">© 2026 Portal Layanan K3. Hak Cipta Dilindungi.</div>
             </div>
         </div>
     </footer>
 
-    <!-- MODALS SECTION -->
-    <div id="modal-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-70 z-[60] hidden flex items-center justify-center backdrop-blur-sm p-4">
+    <div id="modal-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-70 z-[60] hidden flex items-center justify-center backdrop-blur-sm p-4 overflow-y-auto pt-20 pb-20">
         
         <!-- Login / Register Peserta -->
-        <div id="modal-login" class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 hidden relative">
+        <div id="modal-login" class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 hidden relative m-auto">
             <div class="flex justify-between items-center mb-6 border-b pb-3">
                 <h3 class="text-2xl font-bold text-gray-900">Peserta K3</h3>
                 <button class="btn-close-modal text-gray-400 hover:text-gray-800 bg-gray-100 p-1.5 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
@@ -292,7 +291,7 @@
         </div>
 
         <!-- Modal Login Admin Tim -->
-        <div id="modal-login-admin" class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 hidden relative">
+        <div id="modal-login-admin" class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 hidden relative m-auto">
             <h3 class="text-2xl font-bold text-gray-900 mb-2">Portal Tim / Pengajar</h3>
             <p class="text-gray-500 mb-6 text-sm">Masukkan PIN khusus untuk mengelola sistem.</p>
             <form id="form-login-admin" class="space-y-4">
@@ -308,7 +307,7 @@
         </div>
 
         <!-- Modal Hutang Tim -->
-        <div id="modal-hutang-tim" class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 sm:p-8 hidden relative max-h-[90vh] flex-col">
+        <div id="modal-hutang-tim" class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 sm:p-8 hidden relative max-h-[90vh] flex-col m-auto">
             <div class="flex justify-between items-center mb-4 border-b pb-4">
                 <div>
                     <h3 class="text-xl font-bold text-gray-900">Rincian Belum Bayar Tim</h3>
@@ -320,9 +319,10 @@
         </div>
 
         <!-- Modal Ujian -->
-        <div id="modal-ujian" class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-6 sm:p-8 hidden">
+        <div id="modal-ujian" class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl p-4 sm:p-6 md:p-8 hidden m-auto">
+            
             <!-- Intro Ujian -->
-            <div id="ujian-intro" class="py-2">
+            <div id="ujian-intro" class="py-2 max-w-xl mx-auto">
                 <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-inner">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253" /></svg>
                 </div>
@@ -361,25 +361,58 @@
                 <button id="btn-cancel-request" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg font-bold hover:bg-gray-100 transition-colors text-sm">Batalkan Permintaan</button>
             </div>
 
-            <!-- Area Soal dengan Timer -->
-            <div id="ujian-soal" class="hidden">
-                <div class="mb-6 flex flex-wrap gap-2 justify-between items-center text-sm font-semibold text-gray-500 border-b border-gray-200 pb-4">
-                    <div class="flex space-x-2">
-                        <span id="quiz-progress" class="bg-gray-100 px-3 py-1 rounded-full text-gray-700 shadow-sm">Soal 1 dari x</span>
-                        <span id="quiz-category" class="text-accent hidden sm:flex items-center font-bold px-2">Kategori Kelas</span>
+            <!-- Area Soal dengan Timer (Versi CBT Grid Navigasi) -->
+            <div id="ujian-soal" class="hidden w-full">
+                <div class="flex flex-col md:flex-row gap-6 lg:gap-8">
+                    <!-- Area Pertanyaan (Kiri) -->
+                    <div class="flex-1 flex flex-col">
+                        <div class="flex flex-wrap gap-2 justify-between items-center text-sm font-semibold text-gray-500 border-b border-gray-200 pb-4 mb-4">
+                            <div class="flex items-center space-x-3">
+                                <span id="quiz-progress" class="bg-gray-100 px-3 py-1.5 rounded-lg text-gray-800 shadow-sm font-bold border border-gray-200">Soal 1 / x</span>
+                                <span id="quiz-category" class="text-accent hidden sm:inline-block font-bold px-2">Kategori Kelas</span>
+                            </div>
+                            <span class="flex items-center space-x-2 bg-red-50 px-3 py-1.5 rounded-lg text-red-600 shadow-sm border border-red-200 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span id="quiz-timer" class="font-bold tracking-wider font-mono text-base">45:00</span>
+                            </span>
+                        </div>
+                        <div class="min-h-[250px]">
+                            <h4 id="quiz-question" class="text-lg md:text-xl font-bold text-gray-900 mb-6 leading-relaxed">Pertanyaan...</h4>
+                            <div id="quiz-options" class="space-y-3 mb-6"></div>
+                        </div>
+                        
+                        <!-- Navigasi Bawah -->
+                        <div class="flex flex-wrap gap-3 justify-between border-t border-gray-100 pt-5 mt-auto">
+                            <button id="btn-prev-soal" class="flex-1 sm:flex-none justify-center px-4 py-3 bg-gray-200 text-gray-700 font-bold rounded-lg hover:bg-gray-300 text-sm transition-colors flex items-center shadow-sm">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
+                            </button>
+                            <button id="btn-ragu-soal" class="flex-1 sm:flex-none justify-center px-4 py-3 bg-yellow-100 text-yellow-700 font-bold rounded-lg hover:bg-yellow-200 border border-yellow-300 text-sm transition-colors flex items-center shadow-sm">
+                                <input type="checkbox" id="check-ragu" class="mr-2 w-4 h-4 text-yellow-600 bg-white border-yellow-300 rounded focus:ring-yellow-500 cursor-pointer pointer-events-none"> Ragu-ragu
+                            </button>
+                            <button id="btn-next-soal" class="flex-1 sm:flex-none justify-center px-4 py-3 bg-primary text-white font-bold rounded-lg hover:bg-secondary shadow-md text-sm transition-colors flex items-center">
+                                Selanjutnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </div>
                     </div>
-                    <span class="flex items-center space-x-2 bg-red-50 px-3 py-1.5 rounded-full text-red-600 shadow-sm border border-red-200 transition-colors">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span id="quiz-timer" class="font-bold tracking-wider font-mono text-base">45:00</span>
-                    </span>
+                    
+                    <!-- Panel Grid Navigasi (Kanan/Bawah untuk Mobile) -->
+                    <div class="w-full md:w-80 bg-gray-50 border border-gray-200 rounded-xl p-5 shadow-sm h-fit shrink-0 mt-6 md:mt-0">
+                        <h4 class="font-bold text-gray-800 mb-3 text-sm border-b border-gray-200 pb-2 flex items-center"><svg class="w-4 h-4 mr-2 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg> Navigasi Soal</h4>
+                        <div class="flex flex-wrap gap-2 text-[10px] font-semibold text-gray-500 mb-4 justify-center sm:justify-start">
+                            <div class="flex items-center"><span class="w-3 h-3 bg-green-500 rounded-sm mr-1"></span>Terjawab</div>
+                            <div class="flex items-center"><span class="w-3 h-3 bg-yellow-400 rounded-sm mr-1"></span>Ragu</div>
+                            <div class="flex items-center"><span class="w-3 h-3 bg-white border border-gray-300 rounded-sm mr-1"></span>Kosong</div>
+                        </div>
+                        <div id="quiz-nav-grid" class="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-5 gap-2 mb-6 max-h-[160px] md:max-h-[300px] overflow-y-auto admin-scroll p-1">
+                            <!-- Tombol Angka Grid akan di-load di sini oleh JS -->
+                        </div>
+                        <button id="btn-submit-ujian" class="w-full py-3.5 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl shadow-md transition-colors text-sm border border-green-600 mt-auto">Selesai & Kumpulkan</button>
+                    </div>
                 </div>
-                <h4 id="quiz-question" class="text-lg md:text-xl font-bold text-gray-900 mb-6 leading-relaxed">Pertanyaan...</h4>
-                <div id="quiz-options" class="space-y-3 mb-4"></div>
             </div>
             
             <!-- Hasil -->
-            <div id="ujian-hasil" class="hidden text-center py-6">
-                <!-- Ikon Dinamis Lulus/Gagal -->
+            <div id="ujian-hasil" class="hidden text-center py-6 max-w-xl mx-auto">
                 <div id="quiz-icon-container" class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
                     <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                 </div>
@@ -388,7 +421,7 @@
                     <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider mb-1">Nilai Akhir Anda</p>
                     <p id="quiz-score" class="text-5xl font-extrabold text-gray-900">100</p>
                     <p id="quiz-status-lulus" class="text-lg font-bold mt-2 uppercase tracking-widest text-gray-900">MEMPROSES...</p>
-                    <p id="quiz-email-status" class="text-xs font-medium text-blue-600 mt-4 hidden">Mengirim hasil & kunci jawaban ke email...</p>
+                    <p id="quiz-email-status" class="text-xs font-medium text-blue-600 mt-4 hidden">Mengirim hasil & rincian jawaban ke email...</p>
                 </div>
                 <button class="btn-close-modal w-full py-3 bg-primary text-white rounded-lg font-bold hover:bg-secondary shadow-md">Tutup Jendela</button>
             </div>
@@ -794,7 +827,8 @@
             }
         });
 
-        // PERBAIKAN: Mengunci ke folder database lama Anda agar semua data kembali muncul!
+        // ⚠️ PENTING: MENGEMBALIKAN DATA ANDA!
+        // Ini memastikan website membaca folder database yang lama agar data tidak hilang.
         const cleanAppId = 'k3-kebakaran-app-v5';
         
         // Konfigurasi Database Firebase Asli Milik Adrian
@@ -829,6 +863,8 @@
         let activeQuizData = []; 
         let currentQuizIndex = 0; 
         let currentScore = 0;
+        let userAnswers = []; // Menyimpan jawaban peserta
+        let flaggedQuestions = []; // Menyimpan status ragu-ragu
         let currentCalDate = new Date(); 
         let myVerifyRef = null;
         let dataTimAll = []; let dataKegiatanAll = []; let dataPengeluaranAll = [];
@@ -1056,7 +1092,7 @@
         window.bukaModalHutang = function() {
             const container = document.getElementById('list-hutang-tim'); container.innerHTML = ''; const hutangObj = window.currentHutangTimData || {}; const keys = Object.keys(hutangObj);
             if(keys.length === 0) { container.innerHTML = '<div class="text-center py-10 bg-green-50 rounded-xl border border-green-100"><p class="text-green-600 font-bold">🎉 Bersih! Tidak ada tagihan tim yang tertunda.</p></div>'; } 
-            else { keys.forEach(idTim => { const data = hutangObj[idTim]; let listKegHtml = ''; data.kegiatans.forEach(k => { listKegHtml += `<div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg mt-2 border border-gray-100"><span class="text-xs font-semibold text-gray-700 truncate pr-3 flex-grow">${k.namaKegiatan}</span><div class="flex items-center space-x-3 shrink-0"><div class="text-right"><span class="font-extrabold text-orange-600 text-sm block">${formatRupiah(k.totalPendapatanTim)}</span><span class="text-[9px] text-gray-400">Semua Hari</span></div><button onclick="lunasiKegiatanTim('${k.id}')" class="px-3 py-1.5 bg-green-500 text-white hover:bg-green-600 font-bold rounded shadow-sm text-xs transition-colors">Lunasi</button></div></div>`; }); container.innerHTML += `<div class="mb-4 border-2 border-orange-200 rounded-xl p-4 bg-white shadow-sm"><div class="flex justify-between items-center mb-3 border-b border-orange-100 pb-3"><h4 class="font-bold text-gray-900 text-lg flex items-center"><svg class="w-5 h-5 mr-2 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>${data.nama}</h4><div class="text-right"><p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Total Tagihan</p><span class="font-extrabold text-red-500 text-lg">${formatRupiah(data.nominal)}</span></div></div><div class="space-y-1">${listKegHtml}</div></div>`; }); }
+            else { keys.forEach(idTim => { const data = hutangObj[idTim]; let listKegHtml = ''; data.kegiatans.forEach(k => { listKegHtml += `<div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg mt-2 border border-gray-100"><span class="text-xs font-semibold text-gray-700 truncate pr-3 flex-grow">${k.namaKegiatan}</span><div class="flex items-center space-x-3 shrink-0"><div class="text-right"><span class="font-extrabold text-orange-600 text-sm block">${formatRupiah(k.totalPendapatanTim)}</span><span class="text-[9px] text-gray-400">Semua Hari</span></div><button onclick="lunasiKegiatanTim('${k.id}')" class="px-3 py-1.5 bg-green-50 text-white hover:bg-green-600 font-bold rounded shadow-sm text-xs transition-colors">Lunasi</button></div></div>`; }); container.innerHTML += `<div class="mb-4 border-2 border-orange-200 rounded-xl p-4 bg-white shadow-sm"><div class="flex justify-between items-center mb-3 border-b border-orange-100 pb-3"><h4 class="font-bold text-gray-900 text-lg flex items-center"><svg class="w-5 h-5 mr-2 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>${data.nama}</h4><div class="text-right"><p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Total Tagihan</p><span class="font-extrabold text-red-500 text-lg">${formatRupiah(data.nominal)}</span></div></div><div class="space-y-1">${listKegHtml}</div></div>`; }); }
             openModal('modal-hutang-tim');
         };
         window.lunasiKegiatanTim = async function(idKegiatan) { try { await update(ref(db, `${pathKegiatan}/${idKegiatan}`), { statusBayarTim: true }); setTimeout(window.bukaModalHutang, 300); } catch(e){} };
@@ -1279,9 +1315,9 @@
 
             onValue(ref(db, pathTim), (snapshot) => {
                 dataTimAll = []; const selectKeg = document.getElementById('input-kegiatan-tim'); const listAdmin = document.getElementById('admin-list-tim'); const selectUjianTim = document.getElementById('select-ujian-tim');
-                if(selectKeg) selectKeg.innerHTML = `<option value="" disabled selected>-- Pilih Tim --</option><option value="admin_utama" class="font-bold text-primary">Admin Utama (Tanpa WA)</option>`;
                 
-                // --- FITUR ADRIAN SEBAGAI PENGAJAR ---
+                // MENAMBAHKAN ADRIAN KE DROPDOWN
+                if(selectKeg) selectKeg.innerHTML = `<option value="" disabled selected>-- Pilih Tim --</option><option value="admin_utama" class="font-bold text-primary">Adrian (Admin Pusat)</option>`;
                 if(selectUjianTim) selectUjianTim.innerHTML = `<option value="" disabled selected>-- Pilih Pengajar Anda --</option><option value="admin_utama" class="font-bold text-primary">Adrian (Admin Pusat)</option>`;
                 
                 if(listAdmin) listAdmin.innerHTML = '';
@@ -1306,7 +1342,7 @@
                     snapshot.forEach(child => { const data = child.val(); data.id = child.key; pjk3Data.push(data); });
                 }
                 
-                pjk3Data.sort((a,b) => b.timestamp - a.timestamp); // Urutkan terbaru
+                pjk3Data.sort((a,b) => b.timestamp - a.timestamp);
 
                 if(pjk3Data.length === 0) {
                     if(listPublic) listPublic.innerHTML = '<div class="col-span-full text-center py-8 text-gray-500 text-sm">Belum ada data mitra PJK3 yang diunggah.</div>';
@@ -1436,6 +1472,11 @@
                         if(myVerifyRef) { myVerifyRef(); myVerifyRef = null; }
                         document.getElementById('ujian-waiting').classList.add('hidden'); document.getElementById('ujian-soal').classList.remove('hidden');
                         currentQuizIndex = 0; currentScore = 0; 
+                        
+                        // Siapkan array untuk jawaban & status ragu
+                        userAnswers = new Array(activeQuizData.length).fill(null);
+                        flaggedQuestions = new Array(activeQuizData.length).fill(false);
+                        
                         startTimer(); 
                         renderQuestion(); remove(reqRef);
                     } else if (data && data.status === 'rejected') {
@@ -1508,14 +1549,12 @@
                 if (currentUser.email && emailStatusEl) {
                     emailStatusEl.classList.remove('hidden'); emailStatusEl.innerText = `Mengirim hasil & kunci jawaban ke ${currentUser.email}...`; emailStatusEl.className = "text-xs font-medium text-blue-600 mt-4 animate-pulse block";
                     
-                    let textJawaban = `Hasil Ujian K3 Bidang Kebakaran\nNama: ${currentUser.nama}\nKategori: ${currentCategory}\nNilai Akhir: ${finalScore} / 100\nStatus: ${isPassed ? 'LULUS' : 'TIDAK LULUS'}\n\n=== KUNCI JAWABAN ===\n\n`;
-                    activeQuizData.forEach((q, i) => { const opsiBenar = q.opsi[q.jawabanBenar]; textJawaban += `${i+1}. ${q.pertanyaan}\nJawaban Benar: ${opsiBenar}\n\n`; });
+                    let textJawaban = "Hasil Ujian K3 Bidang Kebakaran\nNama: " + currentUser.nama + "\nKategori: " + currentCategory + "\nNilai Akhir: " + finalScore + " / 100\nStatus: " + (isPassed ? 'LULUS' : 'TIDAK LULUS') + "\n\n=== KUNCI JAWABAN ===\n\n";
+                    activeQuizData.forEach((q, i) => { const opsiBenar = q.opsi[q.jawabanBenar]; textJawaban += (i+1) + ". " + q.pertanyaan + "\nJawaban Benar: " + opsiBenar + "\n\n"; });
 
                     const templateParams = { to_email: currentUser.email, to_name: currentUser.nama, score: finalScore, answer_key: textJawaban, sender_email: "ptnurivirapratama@gmail.com" };
 
-                    // GANTI 'SERVICE_ID_ANDA' dan 'TEMPLATE_ID_ANDA' di bawah ini
-                    emailjs.send('SERVICE_ID_ANDA', 'TEMPLATE_ID_ANDA', templateParams) 
-                    .then(function(response) {
+                    emailjs.send('service_phv7wvj', 'template_aofwfyn', templateParams).then(function(response) {
                         emailStatusEl.classList.remove('animate-pulse'); emailStatusEl.className = "text-xs font-bold text-green-600 mt-4 block";
                         emailStatusEl.innerHTML = `<svg class="w-4 h-4 inline mr-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Hasil & kunci jawaban telah terkirim ke email Anda.`;
                     }, function(error) {
