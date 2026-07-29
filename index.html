@@ -19,9 +19,12 @@
     <script type="text/javascript"> 
         (function() { 
             // Inisialisasi EmailJS menggunakan Public Key Anda
-            emailjs.init("vo0I3qZvyNFWClUEO"); 
+            emailjs.init({ publicKey: 'vo0I3qZvyNFWClUEO' }); 
         })(); 
     </script>
+
+    <!-- html2pdf.js untuk cetak PDF Hasil Ujian -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -417,13 +420,18 @@
                     <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 mb-1">Ujian Selesai!</h3>
-                <div class="bg-gray-50 rounded-xl py-6 mb-8 mt-6 border border-gray-100 shadow-sm">
+                <div class="bg-gray-50 rounded-xl py-6 mb-5 mt-6 border border-gray-100 shadow-sm">
                     <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider mb-1">Nilai Akhir Anda</p>
                     <p id="quiz-score" class="text-5xl font-extrabold text-gray-900">100</p>
                     <p id="quiz-status-lulus" class="text-lg font-bold mt-2 uppercase tracking-widest text-gray-900">MEMPROSES...</p>
-                    <p id="quiz-email-status" class="text-xs font-medium text-blue-600 mt-4 hidden">Mengirim hasil & rincian jawaban ke email...</p>
+                    <p id="quiz-email-status" class="text-xs font-medium text-blue-600 mt-4 hidden">Mengirim email notifikasi...</p>
                 </div>
-                <button class="btn-close-modal w-full py-3 bg-primary text-white rounded-lg font-bold hover:bg-secondary shadow-md">Tutup Jendela</button>
+                
+                <button id="btn-download-pdf" class="w-full py-3.5 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl shadow-md transition-colors mb-3 flex justify-center items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Unduh Soal & Kunci Jawaban (PDF)
+                </button>
+                <button class="btn-close-modal w-full py-3 bg-gray-200 text-gray-800 rounded-xl font-bold hover:bg-gray-300 shadow-sm transition-colors">Tutup Jendela</button>
             </div>
         </div>
     </div>
@@ -1633,6 +1641,74 @@
             }
         });
 
+        // FUNGSI MEMBUAT DAN MENDOWNLOAD PDF
+        window.downloadPDFHasil = function() {
+            const btn = document.getElementById('btn-download-pdf');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<svg class="animate-spin w-5 h-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Membuat PDF...`;
+            btn.disabled = true;
+
+            const pdfContainer = document.createElement('div');
+            pdfContainer.style.padding = '30px';
+            pdfContainer.style.fontFamily = 'Arial, sans-serif';
+            pdfContainer.style.color = '#333';
+
+            let html = `<div style="text-align:center; border-bottom: 2px solid #1e3a8a; padding-bottom: 10px; margin-bottom: 20px;">`;
+            html += `<h2 style="color:#1e3a8a; margin: 0 0 5px 0;">Laporan Hasil Ujian K3</h2>`;
+            html += `<p style="margin: 0; font-size: 14px; color: #666;">Portal Pelayanan K3 Bidang Kebakaran</p></div>`;
+            
+            html += `<table style="width: 100%; margin-bottom: 20px; font-size: 14px;">`;
+            html += `<tr><td style="width: 120px;"><strong>Nama Peserta</strong></td><td>: ${currentUser.nama}</td></tr>`;
+            html += `<tr><td><strong>Instansi</strong></td><td>: ${currentUser.instansi}</td></tr>`;
+            html += `<tr><td><strong>Kategori Kelas</strong></td><td>: ${activeQuizData[0]?.kategori || 'Umum'}</td></tr>`;
+            html += `<tr><td><strong>Nilai Akhir</strong></td><td>: <span style="font-size: 18px; font-weight: bold; color: ${currentScore >= (activeQuizData[0]?.kategori === 'Kelas D' ? 65 : 70) ? 'green' : 'red'};">${Math.round((currentScore / activeQuizData.length) * 100)}</span></td></tr>`;
+            html += `</table>`;
+
+            activeQuizData.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                const isCorrect = userAns === q.jawabanBenar;
+                const correctAnsText = q.opsi[q.jawabanBenar];
+
+                html += `<div style="margin-bottom: 15px; padding: 10px; border: 1px solid #eee; border-radius: 5px; page-break-inside: avoid;">`;
+                html += `<p style="margin: 0 0 8px 0; font-weight: bold; font-size: 14px;">${idx + 1}. ${q.pertanyaan}</p>`;
+                
+                const labels = ['A', 'B', 'C', 'D'];
+                html += `<div style="margin-bottom: 8px;">`;
+                q.opsi.forEach((optText, oIdx) => {
+                    const isSelected = userAns === oIdx;
+                    const isTheCorrectOne = q.jawabanBenar === oIdx;
+                    let style = "font-size: 13px; margin: 2px 0;";
+                    if (isSelected && isCorrect) style += " color: green; font-weight: bold;";
+                    else if (isSelected && !isCorrect) style += " color: red; text-decoration: line-through;";
+                    else if (isTheCorrectOne && !isCorrect) style += " color: green; font-weight: bold;";
+                    html += `<p style="${style}">${labels[oIdx]}. ${optText}</p>`;
+                });
+                html += `</div>`;
+
+                html += `<p style="margin: 0; font-size: 13px;"><strong>Status:</strong> <span style="color:${isCorrect ? 'green' : 'red'}; font-weight:bold;">${isCorrect ? 'BENAR' : 'SALAH'}</span></p>`;
+                html += `</div>`;
+            });
+
+            pdfContainer.innerHTML = html;
+
+            const opt = {
+                margin:       10,
+                filename:     `Hasil_Ujian_K3_${currentUser.nama.replace(/\s+/g, '_')}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(pdfContainer).save().then(() => {
+                btn.innerHTML = `<svg class="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Berhasil Diunduh!`;
+                setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 3000);
+            }).catch(err => {
+                btn.innerHTML = "Gagal membuat PDF"; btn.disabled = false;
+            });
+        };
+
+        document.getElementById('btn-download-pdf')?.addEventListener('click', window.downloadPDFHasil);
+
         async function finishQuiz() {
             if(examTimerInterval) clearInterval(examTimerInterval); 
             document.getElementById('ujian-soal').classList.add('hidden'); document.getElementById('ujian-hasil').classList.remove('hidden');
@@ -1668,37 +1744,34 @@
                 try { await update(ref(db, `${pathPeserta}/${currentUser.uid}`), { skorUjian: finalScore, statusKelulusan: isPassed ? 'Lulus' : 'Tidak Lulus' }); } catch(e){} 
                 
                 if (currentUser.email && emailStatusEl) {
-                    emailStatusEl.classList.remove('hidden'); emailStatusEl.innerText = `Mengirim hasil & rincian jawaban ke ${currentUser.email}...`; emailStatusEl.className = "text-xs font-medium text-blue-600 mt-4 animate-pulse block";
+                    emailStatusEl.classList.remove('hidden'); 
+                    emailStatusEl.innerText = `Mengirim email notifikasi ke ${currentUser.email}...`; 
+                    emailStatusEl.className = "text-xs font-medium text-blue-600 mt-4 animate-pulse block";
                     
-                    let textJawaban = "Hasil Ujian K3 Bidang Kebakaran\nNama: " + currentUser.nama + "\nKategori: " + currentCategory + "\nNilai Akhir: " + finalScore + " / 100\nStatus: " + (isPassed ? 'LULUS' : 'TIDAK LULUS') + "\n\n=== RINCIAN JAWABAN ===\n\n";
-                    activeQuizData.forEach((q, i) => { 
-                        const opsiBenar = q.opsi[q.jawabanBenar]; 
-                        const dijawab = userAnswers[i] !== null ? q.opsi[userAnswers[i]] : 'TIDAK MENJAWAB';
-                        const statusBenarText = userAnswers[i] === q.jawabanBenar ? '(BENAR)' : '(SALAH)';
-                        textJawaban += (i+1) + ". " + q.pertanyaan + "\nJawaban Anda: " + dijawab + " " + statusBenarText + "\nKunci Jawaban: " + opsiBenar + "\n\n"; 
-                    });
+                    // Pesan email dibuat singkat agar tidak terkena limit payload/ukuran
+                    let emailSummary = "Halo " + currentUser.nama + ",\n\n" +
+                                       "Anda telah menyelesaikan ujian K3 Bidang Kebakaran untuk kategori " + currentCategory + ".\n\n" +
+                                       "Nilai Akhir: " + finalScore + " / 100\n" +
+                                       "Status: " + (isPassed ? 'LULUS' : 'TIDAK LULUS') + "\n\n" +
+                                       "Rincian soal dan kunci jawaban yang benar dapat Anda UNDUH (Format PDF) secara langsung dengan menekan tombol hijau pada layar hasil ujian website.\n\n" +
+                                       "Terima kasih.";
 
-                    // EmailJS template matching exactly to prevent errors
                     const templateParams = { 
                         to_email: currentUser.email, 
                         to_name: currentUser.nama, 
                         score: finalScore, 
-                        answer_key: textJawaban,
+                        answer_key: emailSummary,
                         sender_email: "ptnurivirapratama@gmail.com" 
                     };
 
                     emailjs.send('service_phv7wvj', 'template_aofwfyn', templateParams) 
                     .then(function(response) {
                         emailStatusEl.classList.remove('animate-pulse'); emailStatusEl.className = "text-xs font-bold text-green-600 mt-4 block";
-                        emailStatusEl.innerHTML = `<svg class="w-4 h-4 inline mr-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Hasil & rincian jawaban telah terkirim ke email Anda.`;
+                        emailStatusEl.innerHTML = `<svg class="w-4 h-4 inline mr-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Email notifikasi nilai berhasil terkirim.`;
                     }, function(error) {
                         console.error('EmailJS Error:', error);
                         emailStatusEl.classList.remove('animate-pulse'); emailStatusEl.className = "text-xs font-bold text-red-500 mt-4 block";
-                        if (error && error.text && error.text.includes("template_id parameter is required")) {
-                            emailStatusEl.innerHTML = `Gagal mengirim email. (ID Template kosong atau tidak valid).`;
-                        } else {
-                            emailStatusEl.innerHTML = `Gagal mengirim email. Buka Konsol Browser untuk detail.`;
-                        }
+                        emailStatusEl.innerHTML = `Gagal mengirim email notifikasi. (Nilai tetap aman tersimpan).`;
                     });
                 }
             }
