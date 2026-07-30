@@ -7,7 +7,7 @@
     <title>Portal Pelayanan K3</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Flatpickr (Kalender Multi-Tanggal) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -130,7 +130,7 @@
     <!-- KONTEN UTAMA -->
     <main class="flex-grow flex flex-col">
         
-        <!-- 1. HERO SECTION INTERAKTIF (Banner Diperkecil) -->
+        <!-- 1. HERO SECTION INTERAKTIF -->
         <section id="hero" class="relative pt-16 pb-24 lg:pt-20 lg:pb-32 overflow-hidden bg-animate z-0">
             <div class="absolute inset-0 bg-grid-pattern-white opacity-20"></div>
             <!-- Decorative Glows -->
@@ -159,7 +159,7 @@
             </div>
         </section>
 
-        <!-- 2. DASHBOARD STATISTIK (Melayang, disesuaikan dengan tinggi banner) -->
+        <!-- 2. DASHBOARD STATISTIK -->
         <section id="dashboard-statistik" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 -mt-16 lg:-mt-20 mb-12 w-full reveal" style="transition-delay: 200ms;">
             <div class="bg-white rounded-3xl shadow-2xl p-6 lg:p-8 border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-10">
                 <div class="flex-1 w-full flex items-center space-x-5 p-4 rounded-2xl hover:bg-blue-50 transition-colors group">
@@ -210,14 +210,13 @@
             </div>
         </section>
 
-        <!-- 4. BERITA TERKINI SECTION (Dipindah ke atas) -->
+        <!-- 4. BERITA TERKINI SECTION -->
         <section id="berita" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 pt-10 border-t border-gray-200">
             <div class="mb-10 flex flex-col md:flex-row justify-between items-end reveal">
                 <div class="text-left">
                     <h2 class="text-3xl font-extrabold text-gray-900 mb-2">Berita & Pengumuman</h2>
                     <p class="text-gray-600 max-w-2xl text-lg">Ikuti perkembangan informasi terbaru seputar regulasi dan kegiatan sertifikasi K3.</p>
                 </div>
-                <!-- Tombol Navigasi Desktop -->
                 <div class="hidden md:flex space-x-3 mt-4 md:mt-0">
                     <button id="btn-berita-prev" class="p-3 rounded-full bg-white border border-gray-200 shadow-sm hover:bg-gray-50 hover:text-primary transition-colors focus:outline-none hover:-translate-x-1" title="Geser Kiri">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
@@ -229,12 +228,9 @@
             </div>
             
             <div class="relative reveal">
-                <!-- CAROUSEL WRAPPER -->
                 <div id="public-berita-container" class="flex overflow-x-auto gap-6 pb-8 pt-2 no-scrollbar snap-x snap-mandatory scroll-smooth cursor-grab active:cursor-grabbing">
-                    <!-- Data berita via JS -->
                     <div class="w-full text-center py-16 bg-gray-50 rounded-2xl border border-gray-200 border-dashed text-gray-500">Memuat berita...</div>
                 </div>
-                <!-- Indikator Geser untuk Mobile -->
                 <div class="md:hidden text-center text-xs text-gray-400 font-semibold animate-pulse mt-[-10px] pb-4 flex items-center justify-center">
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
                     Geser untuk melihat lainnya
@@ -242,7 +238,7 @@
             </div>
         </section>
 
-        <!-- 5. LAYANAN & UJIAN SECTION (Dipindah ke bawah Berita) -->
+        <!-- 5. LAYANAN & UJIAN SECTION -->
         <section id="layanan" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 pt-10 border-t border-gray-200">
             <div class="mb-12 text-center reveal">
                 <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Layanan & Modul Pembelajaran</h2>
@@ -264,11 +260,10 @@
                     </div>
                     <h4 class="text-xl font-bold text-gray-900 mb-2">Modul Terkunci Akses</h4>
                     <p class="text-gray-500 mb-6 max-w-md mx-auto">Silakan login atau daftar sebagai peserta K3 secara gratis terlebih dahulu untuk membaca materi pembelajaran.</p>
-                    <button onclick="openModal('modal-login')" class="px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-secondary transition-colors shadow-md hover:-translate-y-0.5">Buka Kunci Akses</button>
+                    <button onclick="window.openModal('modal-login')" class="px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-secondary transition-colors shadow-md hover:-translate-y-0.5">Buka Kunci Akses</button>
                 </div>
 
                 <div id="modul-list" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-                    <!-- Data modul via JS -->
                 </div>
             </div>
 
@@ -331,8 +326,8 @@
         </div>
     </footer>
 
-    <!-- MODAL OVERLAY -->
-    <div id="modal-overlay" class="fixed inset-0 bg-gray-900/80 z-[60] hidden flex items-center justify-center backdrop-blur-md p-4 transition-opacity">
+    <!-- MODAL OVERLAY Z-INDEX DI TINGKATKAN KE 999 AGAR TIDAK TERHALANG ADMIN PANEL -->
+    <div id="modal-overlay" class="fixed inset-0 bg-gray-900/80 z-[999] hidden flex items-center justify-center backdrop-blur-md p-4 transition-opacity">
         
         <!-- Login / Register Peserta -->
         <div id="modal-login" class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 sm:p-8 hidden relative transform transition-all">
@@ -532,9 +527,9 @@
             </div>
             
             <!-- Hasil Ujian dengan Download PDF -->
-            <div id="ujian-hasil" class="hidden text-center p-8 bg-white h-full flex flex-col items-center justify-center overflow-y-auto relative">
+            <div id="ujian-hasil" class="hidden text-center p-8 bg-white h-full flex flex-col items-center justify-center overflow-y-auto relative pb-32">
                 <!-- Elemen tersembunyi untuk format PDF (Akan di-render html2pdf) -->
-                <div id="pdf-content-container" class="hidden text-left bg-white p-10 w-full max-w-4xl font-sans">
+                <div id="pdf-content-container" class="pdf-render-mode text-left bg-white p-10 w-[800px] font-sans">
                     <div class="text-center mb-6 pb-4 border-b-2 border-gray-800">
                         <h2 class="text-3xl font-extrabold mb-1">Laporan Hasil Ujian CBT</h2>
                         <h3 class="text-lg text-gray-600 font-bold uppercase tracking-widest">K3 Bidang Kebakaran</h3>
@@ -550,24 +545,26 @@
                     <div class="mt-10 pt-6 border-t border-gray-200 text-center text-xs text-gray-400">Dokumen ini digenerate secara otomatis oleh sistem Portal K3.</div>
                 </div>
 
-                <div id="quiz-icon-container" class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
-                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                </div>
-                <h3 class="text-3xl font-extrabold text-gray-900 mb-2">Ujian Selesai!</h3>
-                
-                <div class="w-full max-w-md bg-gray-50 rounded-2xl py-8 mb-6 mt-4 border border-gray-200 shadow-inner">
-                    <p class="text-sm text-gray-500 font-bold uppercase tracking-widest mb-2">Nilai Akhir Anda</p>
-                    <p id="quiz-score" class="text-[5rem] font-black text-gray-900 leading-none">0</p>
-                    <p id="quiz-status-lulus" class="text-lg font-bold mt-4 uppercase tracking-widest text-gray-900">MEMPROSES...</p>
-                    <p id="quiz-email-status" class="text-xs font-medium text-blue-600 mt-5 hidden bg-blue-50 py-1.5 px-3 rounded inline-block">Mengirim notifikasi kelulusan ke email...</p>
+                <div class="flex-grow flex flex-col items-center justify-center w-full max-w-md mx-auto pt-6">
+                    <div id="quiz-icon-container" class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mb-2">Ujian Selesai!</h3>
+                    
+                    <div class="w-full bg-gray-50 rounded-2xl py-8 mb-6 mt-4 border border-gray-200 shadow-inner">
+                        <p class="text-sm text-gray-500 font-bold uppercase tracking-widest mb-2">Nilai Akhir Anda</p>
+                        <p id="quiz-score" class="text-[5rem] font-black text-gray-900 leading-none">0</p>
+                        <p id="quiz-status-lulus" class="text-lg font-bold mt-4 uppercase tracking-widest text-gray-900">MEMPROSES...</p>
+                        <p id="quiz-email-status" class="text-xs font-medium text-blue-600 mt-5 hidden bg-blue-50 py-1.5 px-3 rounded inline-block">Mengirim notifikasi kelulusan ke email...</p>
+                    </div>
                 </div>
 
-                <div class="flex flex-col w-full max-w-md space-y-3">
-                    <button id="btn-download-pdf" class="w-full py-4 bg-gray-900 hover:bg-black text-white rounded-xl font-extrabold shadow-lg hover:shadow-xl transition-all flex items-center justify-center hover:-translate-y-0.5">
+                <div class="w-full bg-white border-t border-gray-200 p-4 flex flex-col gap-3 absolute bottom-0 left-0 z-20 shrink-0">
+                    <button id="btn-download-pdf" class="w-full max-w-md mx-auto py-3.5 bg-gray-900 hover:bg-black text-white rounded-xl font-extrabold shadow-lg hover:shadow-xl transition-all flex items-center justify-center hover:-translate-y-0.5">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        Unduh Soal & Kunci Jawaban (PDF)
+                        Unduh Soal & Kunci (PDF)
                     </button>
-                    <button class="btn-close-modal w-full py-3.5 bg-white border-2 border-gray-200 hover:bg-gray-50 text-gray-800 rounded-xl font-bold transition-all shadow-sm">Kembali ke Beranda</button>
+                    <button class="btn-close-modal w-full max-w-md mx-auto py-3 bg-white border-2 border-gray-200 hover:bg-gray-50 text-gray-800 rounded-xl font-bold transition-all shadow-sm">Tutup Jendela</button>
                 </div>
             </div>
         </div>
@@ -586,7 +583,7 @@
             </div>
             
             <div class="mx-4 mt-4 px-4 py-3 bg-gray-800/50 rounded-xl border border-gray-700 flex justify-between items-center shadow-inner">
-                <span class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Total Visit Website</span>
+                <span class="text-[11px] text-gray-400 font-bold uppercase tracking-wider">Total Visit Website</span>
                 <span id="admin-visitor-count" class="text-sm font-bold text-accent animate-pulse">...</span>
             </div>
 
@@ -627,7 +624,7 @@
             </nav>
             <div class="p-4 border-t border-gray-800 space-y-2 bg-[#0f172a]">
                 <button id="btn-admin-to-web" class="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors text-sm font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg><span>Lihat Website</span></button>
-                <button id="btn-admin-logout" class="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white rounded-lg transition-colors text-sm font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg><span>Keluar Sistem</span></button>
+                <button id="btn-admin-logout" class="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-500/10 text-red-400 hover:bg-red-50 hover:bg-red-500 hover:text-white rounded-lg transition-colors text-sm font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg><span>Keluar Sistem</span></button>
             </div>
         </aside>
 
@@ -712,17 +709,27 @@
                 <!-- Panel: Keuangan -->
                 <div id="admin-panel-pendapatan" class="admin-panel hidden">
                     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
-                        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-green-500"><p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Total Lunas <span class="text-blue-500">(Bulan Ini)</span></p><p class="text-2xl font-extrabold text-green-600" id="stat-uang-masuk">Rp 0</p></div>
-                        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-orange-400"><p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Saldo Tertunda <span class="text-blue-500">(Bulan Ini)</span></p><p class="text-2xl font-extrabold text-orange-500" id="stat-uang-tertunda">Rp 0</p></div>
-                        
-                        <div onclick="bukaModalHutang()" class="admin-utama-only bg-white p-5 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-red-500 hidden cursor-pointer hover:bg-red-50 transition-colors group">
-                            <p class="text-[10px] font-bold text-gray-500 group-hover:text-red-500 uppercase tracking-wider mb-1">Belum Bayar Tim <span class="text-red-500">(ALL TIME)</span></p>
-                            <p class="text-2xl font-extrabold text-red-600" id="stat-hutang-tim">Rp 0</p>
-                            <p class="text-[9px] text-gray-400 mt-1 flex items-center">Klik untuk detail / lunasi <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></p>
+                        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-green-500">
+                            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1 leading-tight">Total Lunas <br><span class="text-blue-500">(Bulan Ini)</span></p>
+                            <p class="text-lg sm:text-xl font-black tracking-tight text-green-600 break-words" id="stat-uang-masuk">Rp 0</p>
                         </div>
-                        
-                        <div class="admin-utama-only bg-white p-5 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-purple-500 hidden"><p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Total Pengeluaran <span class="text-blue-500">(Bulan Ini)</span></p><p class="text-2xl font-extrabold text-purple-600" id="stat-uang-keluar">Rp 0</p></div>
-                        <div class="admin-utama-only bg-white p-5 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-blue-600 hidden"><p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Saldo Bersih <span class="text-blue-500">(Bulan Ini)</span></p><p class="text-2xl font-extrabold text-blue-700" id="stat-uang-saldo">Rp 0</p></div>
+                        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-orange-400">
+                            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1 leading-tight">Saldo Tertunda <br><span class="text-blue-500">(Bulan Ini)</span></p>
+                            <p class="text-lg sm:text-xl font-black tracking-tight text-orange-500 break-words" id="stat-uang-tertunda">Rp 0</p>
+                        </div>
+                        <div onclick="window.bukaModalHutang()" class="admin-utama-only bg-white p-4 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-red-500 hidden cursor-pointer hover:bg-red-50 transition-colors group">
+                            <p class="text-[10px] font-bold text-gray-500 group-hover:text-red-500 uppercase tracking-wider mb-1 leading-tight">Belum Bayar Tim <br><span class="text-red-500">(ALL TIME)</span></p>
+                            <p class="text-lg sm:text-xl font-black tracking-tight text-red-600 break-words" id="stat-hutang-tim">Rp 0</p>
+                            <p class="text-[9px] text-gray-400 mt-1 flex items-center">Klik detail / lunasi <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></p>
+                        </div>
+                        <div class="admin-utama-only bg-white p-4 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-purple-500 hidden">
+                            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1 leading-tight">Total Keluar <br><span class="text-blue-500">(Bulan Ini)</span></p>
+                            <p class="text-lg sm:text-xl font-black tracking-tight text-purple-600 break-words" id="stat-uang-keluar">Rp 0</p>
+                        </div>
+                        <div class="admin-utama-only bg-white p-4 rounded-xl border border-gray-200 shadow-sm border-t-4 border-t-blue-600 hidden">
+                            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1 leading-tight">Saldo Bersih <br><span class="text-blue-500">(Bulan Ini)</span></p>
+                            <p class="text-lg sm:text-xl font-black tracking-tight text-blue-700 break-words" id="stat-uang-saldo">Rp 0</p>
+                        </div>
                     </div>
                     
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
@@ -1059,6 +1066,58 @@
             window.requestAnimationFrame(step);
         };
 
+        function renderAvatarUI(nama, roleText) {
+            const initial = nama ? nama.substring(0,2).toUpperCase() : 'U';
+            const desktopContainer = document.getElementById('auth-container-desktop');
+            const mobileContainer = document.getElementById('auth-container-mobile');
+
+            if(currentUser && currentUser.role === 'peserta') {
+                desktopContainer.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <p class="text-sm font-bold text-gray-900 leading-none">${nama.split(' ')[0]}</p>
+                            <p class="text-[10px] uppercase font-bold tracking-wider text-green-600 mt-0.5">Peserta Aktif</p>
+                        </div>
+                        <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold shadow-sm ring-2 ring-green-100">${initial}</div>
+                        <button id="btn-logout-desktop" class="ml-2 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 font-bold rounded-lg text-xs transition-colors border border-red-200">Keluar</button>
+                    </div>`;
+                mobileContainer.innerHTML = `
+                    <div class="bg-gray-50 p-4 rounded-xl mb-2 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold shadow-sm">${initial}</div>
+                            <div>
+                                <p class="font-bold text-gray-900">${nama}</p>
+                                <p class="text-[10px] text-green-600 font-bold uppercase">Peserta Aktif</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="btn-logout-mobile" class="w-full text-center bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold px-4 py-3 rounded-xl transition-colors">Keluar Akun</button>`;
+
+                document.getElementById('btn-logout-desktop')?.addEventListener('click', processLogout);
+                document.getElementById('btn-logout-mobile')?.addEventListener('click', processLogout);
+            }
+        }
+
+        async function processLogout() {
+            if(confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+                currentUser = null;
+                try { await signInAnonymously(auth); } catch(e){}
+                
+                document.getElementById('auth-container-desktop').innerHTML = `<button id="btn-login-admin-desktop" class="text-sm text-gray-500 hover:text-primary font-bold transition-colors">Login Admin</button><button id="btn-login-desktop" class="bg-primary text-white font-semibold px-6 py-2.5 rounded-xl shadow-sm hover:bg-secondary hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">Masuk / Daftar</button>`;
+                document.getElementById('auth-container-mobile').innerHTML = `<button id="btn-login-mobile" class="w-full text-center bg-primary text-white font-bold px-4 py-3.5 rounded-xl shadow-md">Masuk / Daftar Akun</button><button id="btn-login-admin-mobile" class="w-full text-center text-gray-600 font-bold px-4 py-3.5 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">Login Admin</button>`;
+                
+                document.getElementById('btn-login-desktop')?.addEventListener('click', () => window.openModal('modal-login')); 
+                document.getElementById('btn-login-admin-desktop')?.addEventListener('click', () => window.openModal('modal-login-admin')); 
+                document.getElementById('btn-login-mobile')?.addEventListener('click', () => { document.getElementById('mobile-menu')?.classList.add('hidden'); window.openModal('modal-login'); }); 
+                document.getElementById('btn-login-admin-mobile')?.addEventListener('click', () => { document.getElementById('mobile-menu')?.classList.add('hidden'); window.openModal('modal-login-admin'); });
+                
+                document.getElementById('modul-locked')?.classList.remove('hidden'); 
+                document.getElementById('modul-list')?.classList.add('hidden');
+                
+                if(mobileMenu) mobileMenu.classList.add('hidden');
+            }
+        }
+
         // PENCEGAH ERROR permission_denied & Visitor Counter Realtime
         onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -1113,10 +1172,10 @@
 
         const mobileMenu = document.getElementById('mobile-menu');
         document.getElementById('mobile-menu-button')?.addEventListener('click', () => { if(mobileMenu) mobileMenu.classList.toggle('hidden'); });
-        document.getElementById('btn-login-desktop')?.addEventListener('click', () => openModal('modal-login'));
-        document.getElementById('btn-login-admin-desktop')?.addEventListener('click', () => openModal('modal-login-admin'));
-        document.getElementById('btn-login-mobile')?.addEventListener('click', () => { mobileMenu?.classList.add('hidden'); openModal('modal-login'); });
-        document.getElementById('btn-login-admin-mobile')?.addEventListener('click', () => { mobileMenu?.classList.add('hidden'); openModal('modal-login-admin'); });
+        document.getElementById('btn-login-desktop')?.addEventListener('click', () => window.openModal('modal-login'));
+        document.getElementById('btn-login-admin-desktop')?.addEventListener('click', () => window.openModal('modal-login-admin'));
+        document.getElementById('btn-login-mobile')?.addEventListener('click', () => { mobileMenu?.classList.add('hidden'); window.openModal('modal-login'); });
+        document.getElementById('btn-login-admin-mobile')?.addEventListener('click', () => { mobileMenu?.classList.add('hidden'); window.openModal('modal-login-admin'); });
 
         const tabMasuk = document.getElementById('tab-btn-masuk'); const tabDaftar = document.getElementById('tab-btn-daftar');
         const formMasuk = document.getElementById('form-login-peserta'); const formDaftar = document.getElementById('form-register-peserta');
@@ -1144,7 +1203,7 @@
             try {
                 // Trick untuk Firebase: Tambahkan domain dummy agar bisa login pakai Username
                 await signInWithEmailAndPassword(auth, u + '@portalk3.local', p);
-                closeModal(); e.target.reset();
+                window.closeModal(); e.target.reset();
             } catch (err) {
                 showAuthMsg("Gagal: Username atau Kata Sandi salah.");
             }
@@ -1174,12 +1233,55 @@
             btn.innerText = ori;
         });
 
+        function setupAdminUI(role) {
+            const isUtama = role === 'admin_utama';
+            document.querySelectorAll('.admin-utama-only').forEach(el => {
+                if (isUtama) el.classList.remove('hidden'); else el.classList.add('hidden');
+            });
+            document.getElementById('admin-name-display').innerText = currentUser.nama;
+            document.getElementById('admin-role-display').innerText = isUtama ? 'Admin Utama' : 'Tim Pengajar';
+            document.getElementById('admin-avatar-initial').innerText = currentUser.nama.substring(0,2).toUpperCase();
+            
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const targetId = e.currentTarget.getAttribute('data-target');
+                    if(window.innerWidth < 768) toggleSidebar();
+                    
+                    document.querySelectorAll('.admin-panel').forEach(p => p.classList.add('hidden'));
+                    const targetPanel = document.getElementById(targetId);
+                    if(targetPanel) targetPanel.classList.remove('hidden');
+                    
+                    document.querySelectorAll('.admin-nav-btn').forEach(b => {
+                        b.classList.remove('bg-primary', 'text-white');
+                        b.classList.add('text-gray-400', 'hover:bg-gray-800', 'hover:text-white');
+                    });
+                    e.currentTarget.classList.add('bg-primary', 'text-white');
+                    e.currentTarget.classList.remove('text-gray-400', 'hover:bg-gray-800', 'hover:text-white');
+                    
+                    const headerTitle = document.getElementById('admin-header-title');
+                    if(headerTitle) headerTitle.innerText = e.currentTarget.querySelector('span:last-child').innerText;
+                });
+            });
+        }
+
+        const viewAdmin = document.getElementById('view-admin');
+        const adminSidebar = document.getElementById('admin-sidebar');
+        const adminOverlay = document.getElementById('admin-sidebar-overlay');
+        function openAdminView() { viewAdmin.classList.remove('hidden'); viewAdmin.classList.add('flex'); document.body.style.overflow = 'hidden'; }
+        function closeAdminView() { viewAdmin.classList.add('hidden'); viewAdmin.classList.remove('flex'); document.body.style.overflow = ''; }
+        function toggleSidebar() { adminSidebar.classList.toggle('-translate-x-full'); adminOverlay.classList.toggle('hidden'); }
+        
+        document.getElementById('btn-open-admin-sidebar')?.addEventListener('click', toggleSidebar);
+        document.getElementById('btn-close-admin-sidebar')?.addEventListener('click', toggleSidebar);
+        adminOverlay?.addEventListener('click', toggleSidebar);
+        document.getElementById('btn-admin-to-web')?.addEventListener('click', closeAdminView);
+
         document.getElementById('form-login-admin')?.addEventListener('submit', async (e) => {
             e.preventDefault(); const pin = document.getElementById('input-pin-admin').value; const btnSubmit = document.getElementById('btn-submit-admin'); const oriText = btnSubmit.innerText; btnSubmit.innerText = "Memeriksa...";
-            if (pin === 'admin123') { currentUser = { nama: 'Adrian', role: 'admin_utama', uid: 'admin_master_123' }; renderAvatarUI('Adrian', 'Admin Utama'); setupAdminUI('admin_utama'); openAdminView(); e.target.reset(); } 
+            if (pin === 'admin123') { currentUser = { nama: 'Adrian', role: 'admin_utama', uid: 'admin_master_123' }; setupAdminUI('admin_utama'); openAdminView(); e.target.reset(); window.closeModal(); } 
             else {
                 const timFound = dataTimAll.find(t => t.pin === pin);
-                if (timFound) { currentUser = { nama: timFound.nama, role: 'admin_tim', uid: timFound.id, idTim: timFound.id }; renderAvatarUI(timFound.nama, 'Tim Pengajar'); setupAdminUI('admin_tim'); openAdminView(); e.target.reset(); } 
+                if (timFound) { currentUser = { nama: timFound.nama, role: 'admin_tim', uid: timFound.id, idTim: timFound.id }; setupAdminUI('admin_tim'); openAdminView(); e.target.reset(); window.closeModal(); } 
                 else { btnSubmit.innerText = "PIN Salah!"; btnSubmit.classList.replace('bg-gray-900', 'bg-red-500'); setTimeout(() => { btnSubmit.innerText = oriText; btnSubmit.classList.replace('bg-red-500', 'bg-gray-900'); }, 2000); return; }
             }
             btnSubmit.innerText = oriText;
@@ -1189,7 +1291,7 @@
             currentUser = null; closeAdminView(); try { await signInAnonymously(auth); } catch(e){}
             document.getElementById('auth-container-desktop').innerHTML = `<button id="btn-login-admin-desktop" class="text-sm text-gray-500 hover:text-primary font-bold transition-colors">Login Admin</button><button id="btn-login-desktop" class="bg-primary text-white font-semibold px-6 py-2.5 rounded-xl shadow-sm hover:bg-secondary hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">Masuk / Daftar</button>`;
             document.getElementById('auth-container-mobile').innerHTML = `<button id="btn-login-mobile" class="w-full text-center bg-primary text-white font-bold px-4 py-3.5 rounded-xl shadow-md">Masuk / Daftar Akun</button><button id="btn-login-admin-mobile" class="w-full text-center text-gray-600 font-bold px-4 py-3.5 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">Login Admin</button>`;
-            document.getElementById('btn-login-desktop')?.addEventListener('click', () => openModal('modal-login')); document.getElementById('btn-login-admin-desktop')?.addEventListener('click', () => openModal('modal-login-admin')); document.getElementById('btn-login-mobile')?.addEventListener('click', () => { document.getElementById('mobile-menu')?.classList.add('hidden'); openModal('modal-login'); }); document.getElementById('btn-login-admin-mobile')?.addEventListener('click', () => { document.getElementById('mobile-menu')?.classList.add('hidden'); openModal('modal-login-admin'); });
+            document.getElementById('btn-login-desktop')?.addEventListener('click', () => window.openModal('modal-login')); document.getElementById('btn-login-admin-desktop')?.addEventListener('click', () => window.openModal('modal-login-admin')); document.getElementById('btn-login-mobile')?.addEventListener('click', () => { document.getElementById('mobile-menu')?.classList.add('hidden'); window.openModal('modal-login'); }); document.getElementById('btn-login-admin-mobile')?.addEventListener('click', () => { document.getElementById('mobile-menu')?.classList.add('hidden'); window.openModal('modal-login-admin'); });
             document.getElementById('modul-locked')?.classList.remove('hidden'); document.getElementById('modul-list')?.classList.add('hidden');
         });
 
@@ -1263,12 +1365,12 @@
                     const data = hutangObj[idTim]; 
                     let listKegHtml = ''; 
                     data.kegiatans.forEach(k => { 
-                        listKegHtml += `<div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg mt-2 border border-gray-100"><span class="text-xs font-semibold text-gray-700 truncate pr-3 flex-grow">${k.namaKegiatan}</span><div class="flex items-center space-x-3 shrink-0"><div class="text-right"><span class="font-extrabold text-orange-600 text-sm block">${formatRupiah(k.totalPendapatanTim)}</span><span class="text-[9px] text-gray-400">Semua Hari</span></div><button onclick="lunasiKegiatanTim('${k.id}')" class="px-3 py-1.5 bg-green-500 text-white hover:bg-green-600 font-bold rounded shadow-sm text-xs transition-colors">Lunasi</button></div></div>`; 
+                        listKegHtml += `<div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg mt-2 border border-gray-100"><span class="text-xs font-semibold text-gray-700 truncate pr-3 flex-grow">${k.namaKegiatan}</span><div class="flex items-center space-x-3 shrink-0"><div class="text-right"><span class="font-extrabold text-orange-600 text-sm block">${formatRupiah(k.totalPendapatanTim)}</span><span class="text-[9px] text-gray-400">Semua Hari</span></div><button onclick="window.lunasiKegiatanTim('${k.id}')" class="px-3 py-1.5 bg-green-500 text-white hover:bg-green-600 font-bold rounded shadow-sm text-xs transition-colors">Lunasi</button></div></div>`; 
                     }); 
                     container.innerHTML += `<div class="mb-4 border-2 border-orange-200 rounded-xl p-4 bg-white shadow-sm"><div class="flex justify-between items-center mb-3 border-b border-orange-100 pb-3"><h4 class="font-bold text-gray-900 text-lg flex items-center"><svg class="w-5 h-5 mr-2 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>${data.nama}</h4><div class="text-right"><p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Total Tagihan</p><span class="font-extrabold text-red-500 text-lg">${formatRupiah(data.nominal)}</span></div></div><div class="space-y-1">${listKegHtml}</div></div>`; 
                 }); 
             }
-            openModal('modal-hutang-tim');
+            window.openModal('modal-hutang-tim');
         };
         window.lunasiKegiatanTim = async function(idKegiatan) { try { await update(ref(db, `${pathKegiatan}/${idKegiatan}`), { statusBayarTim: true }); setTimeout(window.bukaModalHutang, 300); } catch(e){} };
 
@@ -1377,7 +1479,7 @@
                         else if (evtDate > todayDateOnly) { colorClass = "bg-blue-100 text-blue-800 hover:bg-blue-200"; borderColor = "border-blue-300"; topBorderColor = "border-blue-300"; } 
                         else { colorClass = "bg-red-100 text-red-800 hover:bg-red-200"; borderColor = "border-red-300"; topBorderColor = "border-red-300"; }
 
-                        eventsHtml += `<div onclick="editKegiatan('${evt.id}')" class="mt-1 px-1.5 py-1 text-[10px] leading-tight ${colorClass} border ${borderColor} rounded cursor-pointer shadow-sm transition-colors" title="Edit Kegiatan"><div class="font-bold truncate">${evt.pjk3}</div>${currentUser.role === 'admin_utama' ? `<div class="text-[9px] opacity-75 truncate mt-0.5 border-t ${topBorderColor} pt-0.5">${evt.namaTim}</div>` : ''}</div>`;
+                        eventsHtml += `<div onclick="window.editKegiatan('${evt.id}')" class="mt-1 px-1.5 py-1 text-[10px] leading-tight ${colorClass} border ${borderColor} rounded cursor-pointer shadow-sm transition-colors" title="Edit Kegiatan"><div class="font-bold truncate">${evt.pjk3}</div>${currentUser.role === 'admin_utama' ? `<div class="text-[9px] opacity-75 truncate mt-0.5 border-t ${topBorderColor} pt-0.5">${evt.namaTim}</div>` : ''}</div>`;
                     });
 
                     const isToday = day === todayDateOnly.getDate() && month === todayDateOnly.getMonth() && year === todayDateOnly.getFullYear();
@@ -1424,7 +1526,7 @@
                             if(isLunasDate) { totalMasukBulanIni += nominalPerHari; } else { totalTertundaBulanIni += nominalPerHari; }
                         }
 
-                        if(currentUser.role === 'admin_utama') { checkHtml += `<label class="flex items-center space-x-2 mt-1 cursor-pointer"><input type="checkbox" ${isLunasDate?'checked':''} onchange="toggleStatusBayarTgl('${k.id}', '${d}', this.checked)" class="rounded border-gray-300 text-primary focus:ring-primary h-3.5 w-3.5 shadow-sm"><span class="text-[10px] text-gray-700 font-medium">${formatDate(d)}</span></label>`; } 
+                        if(currentUser.role === 'admin_utama') { checkHtml += `<label class="flex items-center space-x-2 mt-1 cursor-pointer"><input type="checkbox" ${isLunasDate?'checked':''} onchange="window.toggleStatusBayarTgl('${k.id}', '${d}', this.checked)" class="rounded border-gray-300 text-primary focus:ring-primary h-3.5 w-3.5 shadow-sm"><span class="text-[10px] text-gray-700 font-medium">${formatDate(d)}</span></label>`; } 
                         else { checkHtml += `<div class="text-[10px] text-gray-500 flex items-center mt-1"><span class="w-1.5 h-1.5 rounded-full mr-1.5 ${isLunasDate ? 'bg-green-500' : 'bg-gray-300'}"></span>${formatDate(d)}</div>`; }
                     });
                     
@@ -1456,7 +1558,7 @@
                         else badgeStatus = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700">SEBAGIAN</span>`;
                         
                         let aksiHtml = '';
-                        if(currentUser.role === 'admin_utama') { aksiHtml = `<td class="px-5 py-3 whitespace-nowrap text-right"><button onclick="editKegiatan('${k.id}')" class="text-blue-500 hover:text-blue-700 p-1 bg-blue-50 rounded mr-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button><button onclick="hapusKegiatan('${k.id}')" class="text-red-500 hover:text-red-700 p-1 bg-red-50 rounded"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></td>`; }
+                        if(currentUser.role === 'admin_utama') { aksiHtml = `<td class="px-5 py-3 whitespace-nowrap text-right"><button onclick="window.editKegiatan('${k.id}')" class="text-blue-500 hover:text-blue-700 p-1 bg-blue-50 rounded mr-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button><button onclick="window.hapusKegiatan('${k.id}')" class="text-red-500 hover:text-red-700 p-1 bg-red-50 rounded"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></td>`; }
                         tbodyHtml += `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-5 py-3 text-xs text-gray-600 align-top">${checkHtml}</td><td class="px-5 py-3 text-sm font-semibold text-gray-900 align-top">${k.namaKegiatan} <br><span class="font-normal text-gray-500 text-xs">${k.pjk3}</span></td>${currentUser.role === 'admin_utama' ? `<td class="px-5 py-3 text-xs text-gray-700 font-medium align-top">${k.namaTim}</td>` : ''}<td class="px-5 py-3 whitespace-nowrap text-sm font-bold ${isLunasTotal ? 'text-green-600' : 'text-gray-500'} align-top">${formatRupiah(nominalTotal)}<br><span class="text-[9px] text-gray-400 font-normal">(${formatRupiah(nominalPerHari)} / Hari)</span></td><td class="px-5 py-3 whitespace-nowrap align-top">${badgeStatus}</td>${aksiHtml}</tr>`;
                     }
                 });
@@ -1480,7 +1582,7 @@
                         if (pDate.getMonth() === month && pDate.getFullYear() === year) {
                             totalKeluarBulanIni += (Number(p.jumlah) || 0);
                             countKeluarBulanIni++;
-                            tbodyPengeluaranHtml += `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-5 py-2 text-xs text-gray-600">${formatDate(p.tanggal)}</td><td class="px-5 py-2 text-xs font-semibold text-gray-800">${p.deskripsi}</td><td class="px-5 py-2 text-xs font-bold text-red-500">${formatRupiah(p.jumlah)}</td><td class="px-5 py-2 text-right"><button onclick="hapusPengeluaran('${p.id}')" class="text-red-400 hover:text-red-600 p-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></td></tr>`;
+                            tbodyPengeluaranHtml += `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-5 py-2 text-xs text-gray-600">${formatDate(p.tanggal)}</td><td class="px-5 py-2 text-xs font-semibold text-gray-800">${p.deskripsi}</td><td class="px-5 py-2 text-xs font-bold text-red-500">${formatRupiah(p.jumlah)}</td><td class="px-5 py-2 text-right"><button onclick="window.hapusPengeluaran('${p.id}')" class="text-red-400 hover:text-red-600 p-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></td></tr>`;
                         }
                     });
 
@@ -1493,10 +1595,13 @@
                     const elHutangTim = document.getElementById('stat-hutang-tim'); if(elHutangTim) elHutangTim.innerText = formatRupiah(totalHutangTimAllTime);
                     const elKeluar = document.getElementById('stat-uang-keluar'); const elSaldo = document.getElementById('stat-uang-saldo');
                     if(elKeluar) elKeluar.innerText = formatRupiah(totalKeluarBulanIni);
-                    if(elSaldo) { const saldoAkhir = totalMasukBulanIni - totalKeluarBulanIni; elSaldo.innerText = formatRupiah(saldoAkhir); elSaldo.className = saldoAkhir >= 0 ? "text-2xl font-extrabold text-blue-700" : "text-2xl font-extrabold text-red-600"; }
+                    if(elSaldo) { const saldoAkhir = totalMasukBulanIni - totalKeluarBulanIni; elSaldo.innerText = formatRupiah(saldoAkhir); elSaldo.className = saldoAkhir >= 0 ? "text-lg sm:text-xl font-black tracking-tight text-blue-700 break-words" : "text-lg sm:text-xl font-black tracking-tight text-red-600 break-words"; }
                 }
             }
         }
+
+        document.getElementById('btn-prev-month')?.addEventListener('click', () => { currentCalDate.setMonth(currentCalDate.getMonth() - 1); renderDashboardPendapatanHome(); });
+        document.getElementById('btn-next-month')?.addEventListener('click', () => { currentCalDate.setMonth(currentCalDate.getMonth() + 1); renderDashboardPendapatanHome(); });
 
         function fetchDataRealtime() {
             onValue(ref(db, pathPeserta), (snapshot) => {
@@ -1534,7 +1639,6 @@
                     
                     if(listPublic) { 
                         const imgHtml = b.fotoBase64 ? `<img src="${b.fotoBase64}" class="w-full h-52 object-cover object-center transition-transform duration-700 group-hover:scale-105" alt="Berita">` : `<div class="w-full h-52 ${badgeColor.split(' ')[0]} opacity-50 flex items-center justify-center transition-transform duration-700 group-hover:scale-105"><svg class="w-16 h-16 ${badgeColor.split(' ')[1]} opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg></div>`; 
-                        // Modified to be a carousel item with min-widths
                         listPublic.innerHTML += `
                         <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 overflow-hidden group transition-all duration-300 flex flex-col h-full hover:-translate-y-1 min-w-[85vw] sm:min-w-[350px] md:min-w-[400px] snap-center shrink-0">
                             <div class="overflow-hidden relative">${imgHtml}</div>
@@ -1600,7 +1704,7 @@
                     if(listAdmin) {
                         listAdmin.innerHTML += `
                         <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 flex flex-col items-center text-center relative group">
-                            <button onclick="hapusPjk3('${p.id}')" class="absolute -top-2 -right-2 bg-red-500 text-white p-1.5 rounded-full shadow hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100 z-10" title="Hapus Logo"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                            <button onclick="window.hapusPjk3('${p.id}')" class="absolute -top-2 -right-2 bg-red-500 text-white p-1.5 rounded-full shadow hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100 z-10" title="Hapus Logo"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                             <div class="w-full h-16 bg-white rounded-lg p-1 border border-gray-100 mb-2 flex items-center justify-center overflow-hidden">
                                 <img src="${p.logoBase64}" class="w-full h-full object-contain">
                             </div>
@@ -1611,7 +1715,7 @@
             });
 
             onValue(ref(db, pathKegiatan), (snapshot) => { dataKegiatanAll = []; if(snapshot.exists()) { snapshot.forEach(d => { const dt=d.val(); dt.id=d.key; dataKegiatanAll.push(dt); }); } renderDashboardPendapatanHome(); });
-            onValue(ref(db, pathPengeluaran), (snapshot) => { dataPengeluaranAll = []; const tbody = document.getElementById('admin-table-pengeluaran'); if(tbody) tbody.innerHTML = ''; if(snapshot.exists()) { snapshot.forEach(d => { const dt = d.val(); dt.id = d.key; dataPengeluaranAll.push(dt); if(tbody) tbody.innerHTML += `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-5 py-2 text-xs text-gray-600">${formatDate(dt.tanggal)}</td><td class="px-5 py-2 text-xs font-semibold text-gray-800">${dt.deskripsi}</td><td class="px-5 py-2 text-xs font-bold text-red-500">${formatRupiah(dt.jumlah)}</td><td class="px-5 py-2 text-right"><button onclick="hapusPengeluaran('${dt.id}')" class="text-red-400 hover:text-red-600 p-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></td></tr>`; }); } renderDashboardPendapatanHome(); });
+            onValue(ref(db, pathPengeluaran), (snapshot) => { dataPengeluaranAll = []; const tbody = document.getElementById('admin-table-pengeluaran'); if(tbody) tbody.innerHTML = ''; if(snapshot.exists()) { snapshot.forEach(d => { const dt = d.val(); dt.id = d.key; dataPengeluaranAll.push(dt); if(tbody) tbody.innerHTML += `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-5 py-2 text-xs text-gray-600">${formatDate(dt.tanggal)}</td><td class="px-5 py-2 text-xs font-semibold text-gray-800">${dt.deskripsi}</td><td class="px-5 py-2 text-xs font-bold text-red-500">${formatRupiah(dt.jumlah)}</td><td class="px-5 py-2 text-right"><button onclick="window.hapusPengeluaran('${dt.id}')" class="text-red-400 hover:text-red-600 p-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></td></tr>`; }); } renderDashboardPendapatanHome(); });
 
             onValue(ref(db, pathModul), (snapshot) => {
                 const listPublic = document.getElementById('modul-list'); const listAdmin = document.getElementById('admin-list-modul');
@@ -1650,8 +1754,8 @@
                         listAdmin.innerHTML += `
                             <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg mb-3 shadow-sm relative group transition-all hover:shadow-md hover:border-blue-200">
                                 <div class="absolute top-3 right-3 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button onclick="editSoal('${data.id}')" class="text-blue-500 hover:text-blue-700 p-1.5 bg-white border border-blue-200 rounded shadow-sm transition-colors" title="Edit Soal"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
-                                    <button onclick="hapusSoal('${data.id}')" class="text-red-500 hover:text-red-700 p-1.5 bg-white border border-red-200 rounded shadow-sm transition-colors" title="Hapus Soal"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                                    <button onclick="window.editSoal('${data.id}')" class="text-blue-500 hover:text-blue-700 p-1.5 bg-white border border-blue-200 rounded shadow-sm transition-colors" title="Edit Soal"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
+                                    <button onclick="window.hapusSoal('${data.id}')" class="text-red-500 hover:text-red-700 p-1.5 bg-white border border-red-200 rounded shadow-sm transition-colors" title="Hapus Soal"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                                 </div>
                                 <div class="mb-2"><span class="text-[10px] ${badgeCol} px-2 py-0.5 rounded font-bold uppercase tracking-wider">${data.kategori || 'Umum'}</span></div>
                                 <h4 class="font-bold text-gray-800 text-sm mb-2 leading-relaxed pr-16">${no}. ${data.pertanyaan}</h4>
@@ -1671,7 +1775,7 @@
                     if(currentUser && (currentUser.role === 'admin_utama' || currentUser.idTim === req.idTim)) {
                         if(req.status === 'pending') {
                             countPending++;
-                            tbody.innerHTML += `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">${new Date(req.timestamp).toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})}</td><td class="px-6 py-4"><div class="text-sm font-bold text-gray-900">${req.namaPeserta}</div><div class="text-xs text-gray-500">${req.instansiPeserta}</div></td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-primary">${req.kategori}</td><td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><button onclick="approveUjian('${reqId}')" class="bg-green-500 text-white px-3 py-1.5 rounded shadow-sm hover:bg-green-600 mr-2 text-xs font-bold transition-colors">Izinkan</button><button onclick="rejectUjian('${reqId}')" class="bg-red-50 text-red-600 px-3 py-1.5 rounded border border-red-200 hover:bg-red-100 text-xs font-bold transition-colors">Tolak</button></td></tr>`;
+                            tbody.innerHTML += `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">${new Date(req.timestamp).toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})}</td><td class="px-6 py-4"><div class="text-sm font-bold text-gray-900">${req.namaPeserta}</div><div class="text-xs text-gray-500">${req.instansiPeserta}</div></td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-primary">${req.kategori}</td><td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><button onclick="window.approveUjian('${reqId}')" class="bg-green-500 text-white px-3 py-1.5 rounded shadow-sm hover:bg-green-600 mr-2 text-xs font-bold transition-colors">Izinkan</button><button onclick="window.rejectUjian('${reqId}')" class="bg-red-50 text-red-600 px-3 py-1.5 rounded border border-red-200 hover:bg-red-100 text-xs font-bold transition-colors">Tolak</button></td></tr>`;
                         }
                     }
                 });
@@ -1684,8 +1788,8 @@
         window.rejectUjian = async function(reqId) { try { await update(ref(db, `${pathVerifikasi}/${reqId}`), { status: 'rejected' }); } catch(e){} };
 
         document.getElementById('btn-mulai-ujian')?.addEventListener('click', () => {
-            if(!currentUser || currentUser.role !== 'peserta') { openModal('modal-login'); showAuthMsg("Silakan login/daftar akun gratis untuk mengikuti Ujian CBT."); return; }
-            openModal('modal-ujian'); document.getElementById('ujian-intro').classList.remove('hidden'); document.getElementById('ujian-waiting').classList.add('hidden'); document.getElementById('ujian-soal').classList.add('hidden'); document.getElementById('ujian-soal').classList.remove('flex'); document.getElementById('ujian-hasil').classList.add('hidden');
+            if(!currentUser || currentUser.role !== 'peserta') { window.openModal('modal-login'); showAuthMsg("Silakan login/daftar akun gratis untuk mengikuti Ujian CBT."); return; }
+            window.openModal('modal-ujian'); document.getElementById('ujian-intro').classList.remove('hidden'); document.getElementById('ujian-waiting').classList.add('hidden'); document.getElementById('ujian-soal').classList.add('hidden'); document.getElementById('ujian-soal').classList.remove('flex'); document.getElementById('ujian-hasil').classList.add('hidden');
             if(myVerifyRef) { myVerifyRef(); myVerifyRef = null; }
             if(examTimerInterval) clearInterval(examTimerInterval);
         });
