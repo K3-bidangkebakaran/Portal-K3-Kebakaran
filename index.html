@@ -41,6 +41,10 @@
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         .admin-scroll::-webkit-scrollbar-thumb { background: #334155; }
         
+        /* HIDE SCROLLBAR UNTUK CAROUSEL BERITA */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
         @keyframes ping-slow { 75%, 100% { transform: scale(2); opacity: 0; } }
         .animate-ping-slow { animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
         #admin-sidebar { transition: transform 0.3s ease-in-out; }
@@ -129,25 +133,25 @@
         </div>
     </nav>
 
-    <!-- KONTEN UTAMA DIREVISI -->
+    <!-- KONTEN UTAMA -->
     <main class="flex-grow flex flex-col">
         
-        <!-- 1. HERO SECTION INTERAKTIF -->
-        <section id="hero" class="relative pt-20 pb-36 lg:pt-32 lg:pb-48 overflow-hidden bg-animate z-0">
+        <!-- 1. HERO SECTION INTERAKTIF (Banner Diperkecil) -->
+        <section id="hero" class="relative pt-16 pb-24 lg:pt-20 lg:pb-32 overflow-hidden bg-animate z-0">
             <div class="absolute inset-0 bg-grid-pattern-white opacity-20"></div>
             <!-- Decorative Glows -->
             <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
             <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-accent rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
             
             <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white reveal">
-                <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20 mb-8 shadow-lg">
+                <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20 mb-6 shadow-lg">
                     <span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span></span>
                     <span class="text-[10px] font-bold tracking-widest uppercase text-blue-50">Portal Aktif & Resmi</span>
                 </div>
-                <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight drop-shadow-md">
+                <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-5 leading-tight drop-shadow-md">
                     Pusat Keunggulan <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-yellow-200">K3 Kebakaran</span> Indonesia
                 </h1>
-                <p class="text-lg md:text-xl text-blue-100/90 max-w-3xl mx-auto mb-10 font-medium leading-relaxed drop-shadow">
+                <p class="text-lg md:text-xl text-blue-100/90 max-w-3xl mx-auto mb-8 font-medium leading-relaxed drop-shadow">
                     Platform layanan terpadu untuk pembelajaran modul materi, pendaftaran kegiatan, dan simulasi Ujian Kompetensi (CBT) K3 Kebakaran berbasis digital.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-5">
@@ -161,8 +165,8 @@
             </div>
         </section>
 
-        <!-- 2. DASHBOARD STATISTIK (Melayang) -->
-        <section id="dashboard-statistik" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 -mt-20 lg:-mt-24 mb-16 w-full reveal" style="transition-delay: 200ms;">
+        <!-- 2. DASHBOARD STATISTIK (Melayang, disesuaikan dengan tinggi banner) -->
+        <section id="dashboard-statistik" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 -mt-16 lg:-mt-20 mb-12 w-full reveal" style="transition-delay: 200ms;">
             <div class="bg-white rounded-3xl shadow-2xl p-6 lg:p-8 border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-10">
                 <div class="flex-1 w-full flex items-center space-x-5 p-4 rounded-2xl hover:bg-blue-50 transition-colors group">
                     <div class="w-16 h-16 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform shadow-inner">
@@ -190,7 +194,7 @@
         </section>
 
         <!-- 3. FITUR UNGGULAN -->
-        <section class="py-8 bg-gray-50 mb-16">
+        <section class="py-8 bg-gray-50 mb-8">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center reveal">
                     <div class="p-6 rounded-2xl hover-lift bg-white border border-gray-100 shadow-sm">
@@ -201,7 +205,7 @@
                     <div class="p-6 rounded-2xl hover-lift bg-white border border-gray-100 shadow-sm">
                         <div class="w-14 h-14 mx-auto bg-green-50 rounded-full flex items-center justify-center text-green-600 mb-4 shadow-inner"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div>
                         <h3 class="font-bold text-lg text-gray-900 mb-2">Simulasi CBT Digital</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Rasakan pengalaman Computer Based Test (CBT) layaknya ujian sertifikasi resmi dengan timer dan evaluasi instan.</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">Rasakan pengalaman Computer Based Test (CBT) layaknya ujian sertifikasi resmi dengan evaluasi PDF.</p>
                     </div>
                     <div class="p-6 rounded-2xl hover-lift bg-white border border-gray-100 shadow-sm">
                         <div class="w-14 h-14 mx-auto bg-orange-50 rounded-full flex items-center justify-center text-orange-600 mb-4 shadow-inner"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div>
@@ -212,7 +216,39 @@
             </div>
         </section>
 
-        <!-- 4. LAYANAN & UJIAN SECTION -->
+        <!-- 4. BERITA TERKINI SECTION (Dipindah ke atas) -->
+        <section id="berita" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 pt-10 border-t border-gray-200">
+            <div class="mb-10 flex flex-col md:flex-row justify-between items-end reveal">
+                <div class="text-left">
+                    <h2 class="text-3xl font-extrabold text-gray-900 mb-2">Berita & Pengumuman</h2>
+                    <p class="text-gray-600 max-w-2xl text-lg">Ikuti perkembangan informasi terbaru seputar regulasi dan kegiatan sertifikasi K3.</p>
+                </div>
+                <!-- Tombol Navigasi Desktop -->
+                <div class="hidden md:flex space-x-3 mt-4 md:mt-0">
+                    <button id="btn-berita-prev" class="p-3 rounded-full bg-white border border-gray-200 shadow-sm hover:bg-gray-50 hover:text-primary transition-colors focus:outline-none hover:-translate-x-1" title="Geser Kiri">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button id="btn-berita-next" class="p-3 rounded-full bg-white border border-gray-200 shadow-sm hover:bg-gray-50 hover:text-primary transition-colors focus:outline-none hover:translate-x-1" title="Geser Kanan">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="relative reveal">
+                <!-- CAROUSEL WRAPPER -->
+                <div id="public-berita-container" class="flex overflow-x-auto gap-6 pb-8 pt-2 no-scrollbar snap-x snap-mandatory scroll-smooth cursor-grab active:cursor-grabbing">
+                    <!-- Data berita via JS -->
+                    <div class="w-full text-center py-16 bg-gray-50 rounded-2xl border border-gray-200 border-dashed text-gray-500">Memuat berita...</div>
+                </div>
+                <!-- Indikator Geser untuk Mobile -->
+                <div class="md:hidden text-center text-xs text-gray-400 font-semibold animate-pulse mt-[-10px] pb-4 flex items-center justify-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                    Geser untuk melihat lainnya
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. LAYANAN & UJIAN SECTION (Dipindah ke bawah Berita) -->
         <section id="layanan" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 pt-10 border-t border-gray-200">
             <div class="mb-12 text-center reveal">
                 <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Layanan & Modul Pembelajaran</h2>
@@ -255,18 +291,6 @@
                 <button id="btn-mulai-ujian" class="w-full md:w-auto px-10 py-5 bg-accent hover:bg-yellow-400 text-gray-900 font-extrabold rounded-2xl shadow-[0_10px_25px_rgba(245,158,11,0.5)] transition-all transform hover:-translate-y-1 relative z-10 text-lg flex items-center justify-center shrink-0">
                     MULAI UJIAN SEKARANG <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </button>
-            </div>
-        </section>
-
-        <!-- 5. BERITA TERKINI SECTION -->
-        <section id="berita" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 pt-10 border-t border-gray-200">
-            <div class="mb-10 text-center reveal">
-                <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Berita & Pengumuman</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto text-lg">Ikuti perkembangan informasi terbaru seputar regulasi dan kegiatan sertifikasi K3.</p>
-            </div>
-            <div id="public-berita-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
-                <!-- Data berita via JS -->
-                <div class="col-span-full text-center py-16 bg-gray-50 rounded-2xl border border-gray-200 border-dashed text-gray-500">Memuat berita...</div>
             </div>
         </section>
 
@@ -395,7 +419,7 @@
             <div id="list-hutang-tim" class="flex-grow overflow-y-auto admin-scroll pr-2 space-y-4"></div>
         </div>
 
-        <!-- MODAL UJIAN CBT BARU -->
+        <!-- MODAL UJIAN CBT -->
         <div id="modal-ujian" class="bg-gray-50 rounded-2xl shadow-2xl w-full max-w-5xl p-0 hidden flex-col max-h-[95vh] overflow-hidden relative">
             
             <!-- Intro Ujian -->
@@ -767,7 +791,7 @@
                                     <div class="flex items-center justify-center w-full">
                                         <label for="input-berita-foto" class="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
                                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                <svg class="w-6 h-6 mb-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/></svg>
+                                                <svg class="w-6 h-6 mb-1 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/></svg>
                                                 <p class="text-xs text-gray-500 font-semibold" id="label-nama-file">Klik untuk pilih gambar</p><p class="text-[10px] text-gray-400">(Otomatis dikompres)</p>
                                             </div>
                                             <input id="input-berita-foto" type="file" accept="image/*" class="hidden" />
@@ -967,10 +991,10 @@
             }
         });
 
-        // ⚠️ FOLDER DATABASE DIKUNCI PERMANEN AGAR DATA TIDAK HILANG ⚠️
+        // ⚠️ FOLDER DATABASE TETAP DIKUNCI AGAR DATA LAMA TIDAK HILANG ⚠️
         const cleanAppId = 'k3-kebakaran-app-v5';
         
-        // Konfigurasi Database Firebase Asli
+        // Konfigurasi Database Firebase
         const firebaseConfig = {
           apiKey: "AIzaSyA2ow2lR4Z3lX7zBcZC5Xg3eWlDm7KNAAg",
           authDomain: "portal-k3-bidang-kebakaran.firebaseapp.com",
@@ -1190,6 +1214,7 @@
             document.getElementById('modul-locked')?.classList.remove('hidden'); document.getElementById('modul-list')?.classList.add('hidden');
         });
 
+        // KOMPRESI GAMBAR OTOMATIS (100% GRATIS TANPA FIREBASE STORAGE)
         function compressImage(file, maxWidth, maxHeight, quality, callback) {
             const reader = new FileReader(); reader.readAsDataURL(file);
             reader.onload = function(event) {
@@ -1522,11 +1547,32 @@
                 if(listPublic) listPublic.innerHTML = ''; if(listAdmin) listAdmin.innerHTML = '';
                 let beritas = []; if(snapshot.exists()) { snapshot.forEach(childSnap => { const data = childSnap.val(); data.id = childSnap.key; beritas.push(data); }); }
                 beritas.sort((a,b) => b.timestamp - a.timestamp);
-                if(beritas.length === 0 && listPublic) listPublic.innerHTML = '<div class="col-span-full text-center py-16 bg-gray-50 rounded-2xl border border-gray-200 border-dashed text-gray-500">Belum ada berita atau pengumuman saat ini.</div>';
+                
+                if(beritas.length === 0 && listPublic) listPublic.innerHTML = '<div class="w-full text-center py-16 bg-gray-50 rounded-2xl border border-gray-200 border-dashed text-gray-500">Belum ada berita atau pengumuman saat ini.</div>';
+                
                 beritas.forEach(b => {
                     let badgeColor = 'bg-blue-100 text-blue-700'; if(b.kategori === 'Penting') badgeColor = 'bg-red-100 text-red-700'; else if(b.kategori === 'Regulasi') badgeColor = 'bg-green-100 text-green-700';
-                    if(listPublic) { const imgHtml = b.fotoBase64 ? `<img src="${b.fotoBase64}" class="w-full h-52 object-cover object-center transition-transform duration-700 group-hover:scale-105" alt="Berita">` : `<div class="w-full h-52 ${badgeColor.split(' ')[0]} opacity-50 flex items-center justify-center transition-transform duration-700 group-hover:scale-105"><svg class="w-16 h-16 ${badgeColor.split(' ')[1]} opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg></div>`; listPublic.innerHTML += `<div class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 overflow-hidden group transition-all duration-300 flex flex-col h-full hover:-translate-y-1"><div class="overflow-hidden relative">${imgHtml}</div><div class="p-6 flex flex-col flex-grow"><div class="flex items-center justify-between mb-4"><span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${badgeColor}">${b.kategori}</span><span class="text-[10px] text-gray-400 font-semibold">${formatDate(b.timestamp)}</span></div><h3 class="font-bold text-gray-900 text-lg mb-3 line-clamp-2 group-hover:text-primary transition-colors leading-snug">${b.judul}</h3><p class="text-gray-600 text-sm line-clamp-3 mb-6 leading-relaxed">${b.isi}</p><div class="mt-auto flex items-center space-x-3 border-t border-gray-100 pt-4"><div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 border border-gray-200">${b.penulis.substring(0,1)}</div><span class="text-xs text-gray-500 font-medium">Oleh <span class="text-gray-700 font-semibold">${b.penulis}</span></span></div></div></div>`; }
-                    if(listAdmin) { listAdmin.innerHTML += `<div class="p-4 bg-gray-50 border border-gray-200 rounded-lg flex items-start space-x-4">${b.fotoBase64 ? `<img src="${b.fotoBase64}" class="w-16 h-16 rounded object-cover shadow-sm shrink-0">` : `<div class="w-16 h-16 rounded ${badgeColor.split(' ')[0]} shrink-0 flex items-center justify-center text-[8px] text-center px-1 font-bold ${badgeColor.split(' ')[1]}">No Img</div>`}<div><div class="flex items-center space-x-2 mb-1"><span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${badgeColor}">${b.kategori}</span><span class="text-[10px] text-gray-500">${formatDate(b.timestamp)}</span></div><h4 class="font-bold text-gray-900 text-sm">${b.judul}</h4><p class="text-xs text-gray-600 line-clamp-1 mt-1">${b.isi}</p></div></div>`; }
+                    
+                    if(listPublic) { 
+                        const imgHtml = b.fotoBase64 ? `<img src="${b.fotoBase64}" class="w-full h-52 object-cover object-center transition-transform duration-700 group-hover:scale-105" alt="Berita">` : `<div class="w-full h-52 ${badgeColor.split(' ')[0]} opacity-50 flex items-center justify-center transition-transform duration-700 group-hover:scale-105"><svg class="w-16 h-16 ${badgeColor.split(' ')[1]} opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg></div>`; 
+                        // Modified to be a carousel item with min-widths
+                        listPublic.innerHTML += `
+                        <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 overflow-hidden group transition-all duration-300 flex flex-col h-full hover:-translate-y-1 min-w-[85vw] sm:min-w-[350px] md:min-w-[400px] snap-center shrink-0">
+                            <div class="overflow-hidden relative">${imgHtml}</div>
+                            <div class="p-6 flex flex-col flex-grow">
+                                <div class="flex items-center justify-between mb-4"><span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${badgeColor}">${b.kategori}</span><span class="text-[10px] text-gray-400 font-semibold">${formatDate(b.timestamp)}</span></div>
+                                <h3 class="font-bold text-gray-900 text-lg mb-3 line-clamp-2 group-hover:text-primary transition-colors leading-snug">${b.judul}</h3>
+                                <p class="text-gray-600 text-sm line-clamp-3 mb-6 leading-relaxed">${b.isi}</p>
+                                <div class="mt-auto flex items-center space-x-3 border-t border-gray-100 pt-4">
+                                    <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 border border-gray-200">${b.penulis.substring(0,1)}</div>
+                                    <span class="text-xs text-gray-500 font-medium">Oleh <span class="text-gray-700 font-semibold">${b.penulis}</span></span>
+                                </div>
+                            </div>
+                        </div>`; 
+                    }
+                    if(listAdmin) { 
+                        listAdmin.innerHTML += `<div class="p-4 bg-gray-50 border border-gray-200 rounded-lg flex items-start space-x-4">${b.fotoBase64 ? `<img src="${b.fotoBase64}" class="w-16 h-16 rounded object-cover shadow-sm shrink-0">` : `<div class="w-16 h-16 rounded ${badgeColor.split(' ')[0]} shrink-0 flex items-center justify-center text-[8px] text-center px-1 font-bold ${badgeColor.split(' ')[1]}">No Img</div>`}<div><div class="flex items-center space-x-2 mb-1"><span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${badgeColor}">${b.kategori}</span><span class="text-[10px] text-gray-500">${formatDate(b.timestamp)}</span></div><h4 class="font-bold text-gray-900 text-sm">${b.judul}</h4><p class="text-xs text-gray-600 line-clamp-1 mt-1">${b.isi}</p></div></div>`; 
+                    }
                 });
             });
 
@@ -1939,6 +1985,24 @@
                 });
             }, { threshold: 0.1 });
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            
+            // Logika Tombol Geser Carousel Berita
+            const beritaContainer = document.getElementById('public-berita-container');
+            const btnPrevBerita = document.getElementById('btn-berita-prev');
+            const btnNextBerita = document.getElementById('btn-berita-next');
+
+            if(beritaContainer && btnPrevBerita && btnNextBerita) {
+                // Besaran geser per klik (estimasi 1 card desktop)
+                const scrollAmount = 420; 
+
+                btnPrevBerita.addEventListener('click', () => {
+                    beritaContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                });
+
+                btnNextBerita.addEventListener('click', () => {
+                    beritaContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                });
+            }
         });
 
     </script>
