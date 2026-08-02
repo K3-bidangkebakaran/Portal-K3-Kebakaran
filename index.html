@@ -600,7 +600,7 @@
                 <button id="nav-btn-nilai" class="admin-nav-btn eldi-access w-full flex items-center space-x-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg transition-colors text-sm font-medium" data-target="admin-panel-dashboard"><span>Kelola Hasil Ujian</span></button>
                 <button id="nav-btn-berita" class="admin-nav-btn eldi-access w-full flex items-center space-x-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg transition-colors text-sm font-medium" data-target="admin-panel-berita"><span>Kelola Berita</span></button>
                 <button id="nav-btn-modul" class="admin-nav-btn eldi-access w-full flex items-center space-x-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg transition-colors text-sm font-medium" data-target="admin-panel-modul"><span>Kelola Modul Materi</span></button>
-                <button id="nav-btn-keuangan" class="admin-nav-btn w-full flex items-center space-x-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg transition-colors text-sm font-medium" data-target="admin-panel-pendapatan"><span>Ringkasan Keuangan</span></button>
+                <button id="nav-btn-keuangan" class="admin-nav-btn eldi-access w-full flex items-center space-x-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg transition-colors text-sm font-medium" data-target="admin-panel-pendapatan"><span>Ringkasan Keuangan</span></button>
 
                 <div class="admin-utama-only eldi-access text-[10px] font-bold text-slate-500 uppercase tracking-wider pt-6 pb-2 px-4">Menu Khusus</div>
                 <button class="admin-nav-btn admin-utama-only eldi-access w-full flex items-center space-x-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg transition-colors text-sm font-medium" data-target="admin-panel-kegiatan"><span>Input Kegiatan Baru</span></button>
@@ -707,7 +707,7 @@
                         <div class="p-5 border-b border-slate-200 bg-slate-50 flex justify-between items-center"><h3 class="text-md font-bold text-slate-800">Riwayat Pendapatan</h3></div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
-                                <thead><tr class="bg-white text-slate-500 text-xs uppercase tracking-wider border-b border-slate-200"><th class="px-5 py-4 font-semibold">Tgl Kegiatan (Ceklis = Lunas)</th><th class="px-5 py-4 font-semibold">Nama / PJK3</th><th class="px-5 py-4 font-semibold admin-utama-only hidden">Tim Bertugas</th><th class="px-5 py-4 font-semibold">Pendapatan</th><th class="px-5 py-4 font-semibold">Status Bayar</th><th class="px-5 py-4 font-semibold text-right admin-utama-only hidden">Aksi</th></tr></thead>
+                                <thead><tr class="bg-white text-slate-500 text-xs uppercase tracking-wider border-b border-slate-200"><th class="px-5 py-4 font-semibold">Tgl Kegiatan (Ceklis = Lunas)</th><th class="px-5 py-4 font-semibold">Nama / PJK3</th><th class="px-5 py-4 font-semibold">Pendapatan</th><th class="px-5 py-4 font-semibold">Status Bayar</th><th class="px-5 py-4 font-semibold text-right admin-utama-only hidden">Aksi</th></tr></thead>
                                 <tbody id="admin-table-pendapatan" class="divide-y divide-slate-100 bg-white"><tr><td colspan="6" class="text-center py-6 text-slate-500">Memuat data...</td></tr></tbody>
                             </table>
                         </div>
@@ -785,11 +785,14 @@
                             <div><label class="block text-sm font-semibold text-slate-700 mb-1">Nama Kegiatan Lengkap</label><input type="text" id="input-kegiatan-nama" required placeholder="Cth: Training Ahli K3 Kebakaran Kelas A" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg outline-none text-sm"></div>
                             
                             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4">
-                                <div><label class="block text-sm font-semibold text-slate-700 mb-1">Pilih Tim Bertugas</label><select id="input-kegiatan-tim" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg outline-none bg-white text-sm font-medium"><option value="" disabled selected>-- Memuat Daftar Tim --</option></select></div>
+                                <div id="field-pilih-tim">
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Pilih Tim Bertugas</label>
+                                    <select id="input-kegiatan-tim" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg outline-none bg-white text-sm font-medium"><option value="" disabled selected>-- Memuat Daftar Tim --</option></select>
+                                </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div id="field-pendapatan-mgmt">
                                         <label class="block text-sm font-semibold text-blue-700 mb-1">Pendapatan Mgmt / Hari (Rp)</label>
-                                        <div class="relative"><span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 font-bold">Rp</span><input type="number" id="input-kegiatan-pendapatan" required placeholder="0" class="w-full pl-10 pr-4 py-2.5 border border-blue-300 rounded-lg outline-none text-sm font-semibold bg-white"></div>
+                                        <div class="relative"><span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 font-bold">Rp</span><input type="number" id="input-kegiatan-pendapatan" placeholder="0" class="w-full pl-10 pr-4 py-2.5 border border-blue-300 rounded-lg outline-none text-sm font-semibold bg-white"></div>
                                     </div>
                                     <div>
                                         <label class="block text-sm font-semibold text-green-700 mb-1">Pendapatan Tim / Hari (Rp)</label>
@@ -856,7 +859,7 @@
                 </div>
 
                 <!-- Modul Materi -->
-                <div id="admin-panel-modul" class="admin-panel hidden">
+                <div id="admin-panel-modul" class="admin-panel hidden eldi-access">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-1">
                             <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 sticky top-0">
@@ -947,7 +950,6 @@
         </main>
     </div>
 
-    <!-- JAVASCRIPT & FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -1022,7 +1024,6 @@
         let dataTimAll = []; let dataKegiatanAll = []; let dataPengeluaranAll = []; let dataKategoriAll = [];
         let isAppInitialized = false;
 
-        // UI Tabs LMS
         window.switchLmsTab = function(tabName) {
             ['dashboard', 'kelas', 'cbt', 'live'].forEach(t => {
                 document.getElementById(`view-lms-${t}`)?.classList.add('hidden');
@@ -1084,7 +1085,18 @@
             });
 
             const fieldMgmt = document.getElementById('field-pendapatan-mgmt');
-            if (fieldMgmt) { if (isEldi) fieldMgmt.classList.add('hidden'); else fieldMgmt.classList.remove('hidden'); }
+            const fieldTim = document.getElementById('field-pilih-tim');
+            const selectTim = document.getElementById('input-kegiatan-tim');
+
+            if (isEldi) {
+                if (fieldMgmt) fieldMgmt.classList.add('hidden');
+                if (fieldTim) fieldTim.classList.add('hidden');
+                if (selectTim) selectTim.removeAttribute('required');
+            } else {
+                if (fieldMgmt) fieldMgmt.classList.remove('hidden');
+                if (fieldTim) fieldTim.classList.remove('hidden');
+                if (selectTim) selectTim.setAttribute('required', 'true');
+            }
 
             const btnNilai = document.getElementById('nav-btn-nilai');
             const btnBerita = document.getElementById('nav-btn-berita');
@@ -1094,7 +1106,7 @@
             if (isUtama) {
                 if(btnNilai) btnNilai.classList.remove('hidden'); if(btnBerita) btnBerita.classList.remove('hidden'); if(btnKeuangan) btnKeuangan.classList.remove('hidden'); if(btnModul) btnModul.classList.remove('hidden');
             } else if (isEldi) {
-                if(btnNilai) btnNilai.classList.remove('hidden'); if(btnBerita) btnBerita.classList.remove('hidden'); if(btnKeuangan) btnKeuangan.classList.add('hidden'); if(btnModul) btnModul.classList.remove('hidden');
+                if(btnNilai) btnNilai.classList.remove('hidden'); if(btnBerita) btnBerita.classList.remove('hidden'); if(btnKeuangan) btnKeuangan.classList.remove('hidden'); if(btnModul) btnModul.classList.remove('hidden');
             } else if (role === 'admin_tim') {
                 const izin = currentUser.izin || {};
                 if(btnNilai) { if(izin.nilai) btnNilai.classList.remove('hidden'); else btnNilai.classList.add('hidden'); }
@@ -1202,7 +1214,6 @@
         function toggleSidebar() { adminSidebar.classList.toggle('-translate-x-full'); adminOverlay.classList.toggle('hidden'); }
         document.getElementById('btn-open-admin-sidebar')?.addEventListener('click', toggleSidebar); document.getElementById('btn-close-admin-sidebar')?.addEventListener('click', toggleSidebar); adminOverlay?.addEventListener('click', toggleSidebar); document.getElementById('btn-admin-to-web')?.addEventListener('click', window.closeAdminView);
 
-        // LOGIN ADMIN & INSTRUKTUR
         document.getElementById('form-login-admin')?.addEventListener('submit', async (e) => {
             e.preventDefault(); const pin = document.getElementById('input-pin-admin').value; const btnSubmit = document.getElementById('btn-submit-admin'); const oriText = btnSubmit.innerText; btnSubmit.innerText = "Memeriksa...";
             
@@ -1266,7 +1277,6 @@
 
         async function sendWA_Fonnte(target, textMessage) { try { const fd = new URLSearchParams(); fd.append("target", target); fd.append("message", textMessage); await fetch("https://api.fonnte.com/send", { method: 'POST', headers: { 'Authorization': 'TnG5G4e5L1XNiP9HfRts' }, body: fd }); return true; } catch (err) { return false; } }
 
-        // KATEGORI BIDANG K3 DYNAMIC
         document.getElementById('form-kategori')?.addEventListener('submit', async (e) => {
             e.preventDefault(); if(!currentUser) return;
             const btn = e.target.querySelector('button'); const ori = btn.innerText; btn.innerText = "Menyimpan...";
@@ -1278,7 +1288,6 @@
             try { await remove(ref(db, `${pathKategori}/${id}`)); window.showToast("Kategori berhasil dihapus.", "success"); } catch(e) { window.showToast("Gagal menghapus kategori.", "error"); }
         };
 
-        // FORM SUBMISSIONS
         document.getElementById('form-berita')?.addEventListener('submit', async (e) => {
             e.preventDefault(); if(!currentUser) return; const btn = e.target.querySelector('button'); const ori = btn.innerHTML; btn.innerText = "Menerbitkan..."; btn.disabled = true;
             try { await push(ref(db, pathBerita), { judul: document.getElementById('input-berita-judul').value, kategori: document.getElementById('input-berita-kategori').value, isi: document.getElementById('input-berita-isi').value, fotoBase64: compressedBase64Array.length > 0 ? compressedBase64Array : null, penulis: currentUser.nama, timestamp: Date.now() }); e.target.reset(); compressedBase64Array = []; if(labelFile) { labelFile.innerHTML = `Klik pilih gambar<br><span class="font-normal">(Bisa lebih dari 1)</span>`; labelFile.classList.remove('text-safety-600'); } btn.innerText = "Diterbitkan!"; } catch(err) { btn.innerText = "Gagal"; } setTimeout(() => { btn.innerHTML = ori; btn.disabled = false; }, 2000);
@@ -1287,9 +1296,17 @@
         document.getElementById('form-kegiatan')?.addEventListener('submit', async (e) => {
             e.preventDefault(); if(!currentUser) return; const btn = document.getElementById('btn-submit-kegiatan'); const ori = btn.innerHTML; btn.innerText = "Menyimpan..."; btn.disabled = true;
             const isEldi = currentUser.role === 'admin_eldi';
-            const idEdit = document.getElementById('input-kegiatan-id').value; const selectTim = document.getElementById('input-kegiatan-tim'); const idTim = selectTim.value; const namaTim = selectTim.options[selectTim.selectedIndex].text; const tanggal = document.getElementById('input-kegiatan-tanggal').value; const namaKeg = document.getElementById('input-kegiatan-nama').value; const pjk3 = document.getElementById('input-kegiatan-pjk3').value; 
+            const idEdit = document.getElementById('input-kegiatan-id').value; 
+            const selectTim = document.getElementById('input-kegiatan-tim'); 
+            
+            const idTim = isEldi ? 'eldi_123' : selectTim.value; 
+            const namaTim = isEldi ? 'Eldi Prayoga Firdaus' : selectTim.options[selectTim.selectedIndex]?.text; 
+            const tanggal = document.getElementById('input-kegiatan-tanggal').value; 
+            const namaKeg = document.getElementById('input-kegiatan-nama').value; 
+            const pjk3 = document.getElementById('input-kegiatan-pjk3').value; 
             const pendapatanManagement = isEldi ? 0 : (parseInt(document.getElementById('input-kegiatan-pendapatan').value) || 0); 
             const pendapatanTim = parseInt(document.getElementById('input-kegiatan-pendapatan-tim').value) || 0;
+            
             const dataToSave = { idTim, namaTim, tanggal, namaKegiatan: namaKeg, pjk3, pendapatanManagement, pendapatanTim };
             try {
                 if (idEdit) { await update(ref(db, `${pathKegiatan}/${idEdit}`), dataToSave); document.getElementById('btn-batal-kegiatan')?.click(); btn.innerText = "Diperbarui!"; window.showToast("Kegiatan diperbarui.", "success"); } 
@@ -1455,7 +1472,7 @@
 
                     sortedPendapatan.forEach(k => {
                         const dates = k.tanggal ? k.tanggal.split(',').map(d => d.trim()) : []; 
-                        const nominalPerHari = (currentUser.role === 'admin_utama' || currentUser.role === 'admin_eldi') ? (Number(k.pendapatanManagement) || 0) : (Number(k.pendapatanTim) || 0);
+                        const nominalPerHari = (currentUser.role === 'admin_utama') ? (Number(k.pendapatanManagement) || 0) : (Number(k.pendapatanTim) || 0);
                         const nominalTotal = dates.length > 0 ? (nominalPerHari * dates.length) : nominalPerHari;
 
                         const statusBayarDates = k.statusBayarDates || {}; let lunasCount = 0; let checkHtml = ''; let isKegiatanDiBulanIni = false; 
@@ -1603,7 +1620,6 @@
                 if(snapshot.exists()) {
                     snapshot.forEach(childSnap => { const data = childSnap.val(); data.id = childSnap.key; dataKategoriAll.push(data); });
                 } else {
-                    // Inject default if empty
                     const defaultKat = ["Petugas Peran Kebakaran (Kelas D)", "Regu Penanggulangan Kebakaran (Kelas C)", "Koordinator Penanggulangan Kebakaran (Kelas B)", "Ahli K3 Spesialis Kebakaran (Kelas A)"];
                     defaultKat.forEach((nama, idx) => { dataKategoriAll.push({ id: `def_${idx}`, nama: nama, timestamp: Date.now() }); });
                 }
@@ -1791,7 +1807,7 @@
                 if(snapshot.exists()) {
                     snapshot.forEach(d => {
                         countModul++; const data = d.val(); let badgeCol = 'bg-slate-100 text-slate-700';
-                        if(data.kategori.includes('Kelas A')) badgeCol = 'bg-red-100 text-red-700'; if(data.kategori.includes('Kelas B')) badgeCol = 'bg-amber-100 text-amber-700'; if(data.kategori.includes('Kelas C')) badgeCol = 'bg-emerald-100 text-emerald-700'; if(data.kategori.includes('Kelas D')) badgeCol = 'bg-sky-100 text-sky-700';
+                        if(data.kategori && data.kategori.includes('Kelas A')) badgeCol = 'bg-red-100 text-red-700'; if(data.kategori && data.kategori.includes('Kelas B')) badgeCol = 'bg-amber-100 text-amber-700'; if(data.kategori && data.kategori.includes('Kelas C')) badgeCol = 'bg-emerald-100 text-emerald-700'; if(data.kategori && data.kategori.includes('Kelas D')) badgeCol = 'bg-sky-100 text-sky-700';
                         
                         let videoHtml = '';
                         if (data.videoUrl) {
@@ -1829,7 +1845,7 @@
                         if(data.opsi && Array.isArray(data.opsi)) { data.opsi.forEach((opt, idx) => { const isCorrect = idx === data.jawabanBenar; htmlOpsi += `<div class="text-xs mt-1 ${isCorrect ? 'font-bold text-green-600' : 'text-slate-500'}">${labels[idx]}. ${opt} ${isCorrect ? '✓' : ''}</div>`; }); }
                         
                         let badgeCol = 'bg-slate-100 text-slate-700';
-                        if(data.kategori.includes('Kelas A')) badgeCol = 'bg-red-100 text-red-700'; if(data.kategori.includes('Kelas B')) badgeCol = 'bg-amber-100 text-amber-700'; if(data.kategori.includes('Kelas C')) badgeCol = 'bg-emerald-100 text-emerald-700'; if(data.kategori.includes('Kelas D')) badgeCol = 'bg-sky-100 text-sky-700';
+                        if(data.kategori && data.kategori.includes('Kelas A')) badgeCol = 'bg-red-100 text-red-700'; if(data.kategori && data.kategori.includes('Kelas B')) badgeCol = 'bg-amber-100 text-amber-700'; if(data.kategori && data.kategori.includes('Kelas C')) badgeCol = 'bg-emerald-100 text-emerald-700'; if(data.kategori && data.kategori.includes('Kelas D')) badgeCol = 'bg-sky-100 text-sky-700';
 
                         listAdmin.innerHTML += `<div class="p-4 bg-slate-50 border border-slate-200 rounded-lg mb-3 shadow-sm relative group"><div class="absolute top-3 right-3 flex space-x-2"><button onclick="window.editSoal('${data.id}')" class="text-blue-600 hover:text-blue-800 p-1 bg-white border border-blue-200 rounded shadow-sm" title="Edit Soal"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button><button onclick="window.hapusSoal('${data.id}')" class="text-red-600 hover:text-red-800 p-1 bg-white border border-red-200 rounded shadow-sm" title="Hapus Soal"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div><div class="mb-2"><span class="text-[10px] ${badgeCol} px-2 py-0.5 rounded font-bold uppercase">${data.kategori || 'Umum'}</span></div><h4 class="font-bold text-slate-800 text-sm mb-2 leading-relaxed pr-16">No. ${noSoalBidang} - ${data.pertanyaan}</h4><div class="pl-3 border-l-2 border-slate-200">${htmlOpsi}</div></div>`;
                     });
@@ -1861,7 +1877,6 @@
                         activeQuizData = quizDataFromDB.filter(q => q.kategori === kat);
                         if(activeQuizData.length === 0) activeQuizData = quizDataFromDB.slice(0, 10);
                         
-                        // Fisher-Yates shuffle
                         for (let i = activeQuizData.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [activeQuizData[i], activeQuizData[j]] = [activeQuizData[j], activeQuizData[i]]; }
                         
                         userAnswers = new Array(activeQuizData.length).fill(null);
@@ -1962,8 +1977,13 @@
 
         function finishQuizConfirmation() {
             const unans = userAnswers.filter(a => a === null).length;
-            if (unans > 0) { if(confirm(`Ada ${unans} soal yang belum dijawab! Anda yakin mengakhiri ujian?`)) finishQuiz(); } 
-            else { if(confirm(`Anda telah menjawab semua soal. Kumpulkan ujian sekarang?`)) finishQuiz(); }
+            if (unans > 0) { 
+                window.showToast(`Menyelesaikan ujian dengan ${unans} soal kosong...`, "warning");
+                setTimeout(() => { finishQuiz(); }, 2000);
+            } else { 
+                window.showToast("Mengumpulkan Ujian...", "info");
+                setTimeout(() => { finishQuiz(); }, 1500);
+            }
         }
 
         async function finishQuiz() {
